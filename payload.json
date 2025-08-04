@@ -1,0 +1,1535 @@
+{
+    "actions": null,
+    "detailsRows": null,
+    "title": "<span>Compras</span>",
+    "subtitle": "Licitações",
+    "idTable": "compublicaportallicitacaoPortalLicitacaoTableService",
+    "actionHeadClasses": null,
+    "textNoData": "Nenhuma licitação encontrada para o filtro/período pesquisado",
+    "forceShowActions": true,
+    "treeTable": false,
+    "expandTable": false,
+    "paramTable": false,
+    "showConfig": false,
+    "showConfigActions": false,
+    "showCountPagesAction": true,
+    "subheader": null,
+    "multiSelectedEnabled": false,
+    "selectAllPages": false,
+    "selectedLineEnabled": false,
+    "semDados": false,
+    "header": null,
+    "idHeadParentAsLong": null,
+    "pagination": {
+        "page": 1,
+        "size": 401,
+        "count": 25,
+        "paginate": true,
+        "countValues": [
+            {
+                "value": 25,
+                "desc": "25",
+                "valueClass": "java.lang.Integer",
+                "params": {}
+            },
+            {
+                "value": 50,
+                "desc": "50",
+                "valueClass": "java.lang.Integer",
+                "params": {}
+            },
+            {
+                "value": 100,
+                "desc": "100",
+                "valueClass": "java.lang.Integer",
+                "params": {}
+            },
+            {
+                "value": 300,
+                "desc": "300",
+                "valueClass": "java.lang.Integer",
+                "params": {}
+            }
+        ]
+    },
+    "searchBean": {
+        "searchPlaceholder": null,
+        "searchAdvanced": [
+            {
+                "name": "Filtrar por",
+                "hide": true,
+                "components": [
+                    {
+                        "searchType": "ADVANCED",
+                        "searchRestrictionType": "MULTI_ENUM_POJO",
+                        "property": "listUnidadesGestoras",
+                        "label": "<span>Unidade gestora</span>",
+                        "placeholder": "",
+                        "searchDefault": true,
+                        "allowAddChildren": true,
+                        "condition": {
+                            "value": "IGUAL",
+                            "desc": "Igual",
+                            "valueClass": "com.publica.base.web.components.search.SearchCondition",
+                            "params": {},
+                            "icon": "epublica-icon-equals"
+                        },
+                        "classEnum": null,
+                        "params": {
+                            "nestedName": "groupByUnidadeGestora",
+                            "values": [
+                                {
+                                    "value": {
+                                        "id": 3,
+                                        "version": null,
+                                        "codigo": 6,
+                                        "idIndex": 1,
+                                        "denominacao": "Fundação Municipal do Meio Ambiente",
+                                        "inscricaoEstadual": null,
+                                        "telefone": null,
+                                        "email": null,
+                                        "homePage": null,
+                                        "tipoUnidadeGestora": "FUNDACAO",
+                                        "denominacaoPara": "para Fundação Municipal do Meio Ambiente"
+                                    },
+                                    "desc": "Fundação Municipal do Meio Ambiente",
+                                    "valueClass": "com.publica.portal.dominio.unidade.gestora.PortalUnidadeGestoraPojo",
+                                    "params": {}
+                                },
+                                {
+                                    "value": {
+                                        "id": 4,
+                                        "version": null,
+                                        "codigo": 5,
+                                        "idIndex": 2,
+                                        "denominacao": "Fundação Municipal de Esportes",
+                                        "inscricaoEstadual": null,
+                                        "telefone": null,
+                                        "email": null,
+                                        "homePage": null,
+                                        "tipoUnidadeGestora": "FUNDACAO",
+                                        "denominacaoPara": "para Fundação Municipal de Esportes"
+                                    },
+                                    "desc": "Fundação Municipal de Esportes",
+                                    "valueClass": "com.publica.portal.dominio.unidade.gestora.PortalUnidadeGestoraPojo",
+                                    "params": {}
+                                },
+                                {
+                                    "value": {
+                                        "id": 5,
+                                        "version": null,
+                                        "codigo": 25,
+                                        "idIndex": 3,
+                                        "denominacao": "Fundação Rede Solidária Somar Floripa",
+                                        "inscricaoEstadual": null,
+                                        "telefone": null,
+                                        "email": null,
+                                        "homePage": null,
+                                        "tipoUnidadeGestora": "FUNDACAO",
+                                        "denominacaoPara": "para Fundação Rede Solidária Somar Floripa"
+                                    },
+                                    "desc": "Fundação Rede Solidária Somar Floripa",
+                                    "valueClass": "com.publica.portal.dominio.unidade.gestora.PortalUnidadeGestoraPojo",
+                                    "params": {}
+                                },
+                                {
+                                    "value": {
+                                        "id": 6,
+                                        "version": null,
+                                        "codigo": 10,
+                                        "idIndex": 4,
+                                        "denominacao": "Fundo Municipal de Assistência Social",
+                                        "inscricaoEstadual": null,
+                                        "telefone": null,
+                                        "email": null,
+                                        "homePage": null,
+                                        "tipoUnidadeGestora": "FUNDO",
+                                        "denominacaoPara": "para Fundo Municipal de Assistência Social"
+                                    },
+                                    "desc": "Fundo Municipal de Assistência Social",
+                                    "valueClass": "com.publica.portal.dominio.unidade.gestora.PortalUnidadeGestoraPojo",
+                                    "params": {}
+                                },
+                                {
+                                    "value": {
+                                        "id": 7,
+                                        "version": null,
+                                        "codigo": 2,
+                                        "idIndex": 5,
+                                        "denominacao": "Fundo Municipal de Cinema - FUNCINE",
+                                        "inscricaoEstadual": null,
+                                        "telefone": null,
+                                        "email": null,
+                                        "homePage": null,
+                                        "tipoUnidadeGestora": "FUNDO",
+                                        "denominacaoPara": "para Fundo Municipal de Cinema - FUNCINE"
+                                    },
+                                    "desc": "Fundo Municipal de Cinema - FUNCINE",
+                                    "valueClass": "com.publica.portal.dominio.unidade.gestora.PortalUnidadeGestoraPojo",
+                                    "params": {}
+                                },
+                                {
+                                    "value": {
+                                        "id": 8,
+                                        "version": null,
+                                        "codigo": 23,
+                                        "idIndex": 6,
+                                        "denominacao": "Fundo Municipal de Inovação",
+                                        "inscricaoEstadual": null,
+                                        "telefone": null,
+                                        "email": null,
+                                        "homePage": null,
+                                        "tipoUnidadeGestora": "FUNDO",
+                                        "denominacaoPara": "para Fundo Municipal de Inovação"
+                                    },
+                                    "desc": "Fundo Municipal de Inovação",
+                                    "valueClass": "com.publica.portal.dominio.unidade.gestora.PortalUnidadeGestoraPojo",
+                                    "params": {}
+                                },
+                                {
+                                    "value": {
+                                        "id": 9,
+                                        "version": null,
+                                        "codigo": 20,
+                                        "idIndex": 7,
+                                        "denominacao": "Fundo Municipal de Turismo",
+                                        "inscricaoEstadual": null,
+                                        "telefone": null,
+                                        "email": null,
+                                        "homePage": null,
+                                        "tipoUnidadeGestora": "FUNDO",
+                                        "denominacaoPara": "para Fundo Municipal de Turismo"
+                                    },
+                                    "desc": "Fundo Municipal de Turismo",
+                                    "valueClass": "com.publica.portal.dominio.unidade.gestora.PortalUnidadeGestoraPojo",
+                                    "params": {}
+                                },
+                                {
+                                    "value": {
+                                        "id": 10,
+                                        "version": null,
+                                        "codigo": 21,
+                                        "idIndex": 8,
+                                        "denominacao": "Fundo Municipal do Idoso",
+                                        "inscricaoEstadual": null,
+                                        "telefone": null,
+                                        "email": null,
+                                        "homePage": null,
+                                        "tipoUnidadeGestora": "FUNDO",
+                                        "denominacaoPara": "para Fundo Municipal do Idoso"
+                                    },
+                                    "desc": "Fundo Municipal do Idoso",
+                                    "valueClass": "com.publica.portal.dominio.unidade.gestora.PortalUnidadeGestoraPojo",
+                                    "params": {}
+                                },
+                                {
+                                    "value": {
+                                        "id": 11,
+                                        "version": null,
+                                        "codigo": 11,
+                                        "idIndex": 9,
+                                        "denominacao": "Fundo Municipal da Criança e do Adolescente",
+                                        "inscricaoEstadual": null,
+                                        "telefone": null,
+                                        "email": null,
+                                        "homePage": null,
+                                        "tipoUnidadeGestora": "FUNDO",
+                                        "denominacaoPara": "para Fundo Municipal da Criança e do Adolescente"
+                                    },
+                                    "desc": "Fundo Municipal da Criança e do Adolescente",
+                                    "valueClass": "com.publica.portal.dominio.unidade.gestora.PortalUnidadeGestoraPojo",
+                                    "params": {}
+                                },
+                                {
+                                    "value": {
+                                        "id": 12,
+                                        "version": null,
+                                        "codigo": 19,
+                                        "idIndex": 10,
+                                        "denominacao": "Fundo Municipal de Emergência da Defesa Civil",
+                                        "inscricaoEstadual": null,
+                                        "telefone": null,
+                                        "email": null,
+                                        "homePage": null,
+                                        "tipoUnidadeGestora": "FUNDO",
+                                        "denominacaoPara": "para Fundo Municipal de Emergência da Defesa Civil"
+                                    },
+                                    "desc": "Fundo Municipal de Emergência da Defesa Civil",
+                                    "valueClass": "com.publica.portal.dominio.unidade.gestora.PortalUnidadeGestoraPojo",
+                                    "params": {}
+                                },
+                                {
+                                    "value": {
+                                        "id": 13,
+                                        "version": null,
+                                        "codigo": 14,
+                                        "idIndex": 11,
+                                        "denominacao": "FUMDESF - Fundo Municipal Promoção Empreendimento Desenvolvimento Comercial, Industrial, Rural e Marinho",
+                                        "inscricaoEstadual": null,
+                                        "telefone": null,
+                                        "email": null,
+                                        "homePage": null,
+                                        "tipoUnidadeGestora": "FUNDO",
+                                        "denominacaoPara": "para FUMDESF - Fundo Municipal Promoção Empreendimento Desenvolvimento Comercial, Industrial, Rural e Marinho"
+                                    },
+                                    "desc": "FUMDESF - Fundo Municipal Promoção Empreendimento Desenvolvimento Comercial, Industrial, Rural e Marinho",
+                                    "valueClass": "com.publica.portal.dominio.unidade.gestora.PortalUnidadeGestoraPojo",
+                                    "params": {}
+                                },
+                                {
+                                    "value": {
+                                        "id": 14,
+                                        "version": null,
+                                        "codigo": 8,
+                                        "idIndex": 12,
+                                        "denominacao": "Fundo Municipal de Habitação de Interesse Social",
+                                        "inscricaoEstadual": null,
+                                        "telefone": null,
+                                        "email": null,
+                                        "homePage": null,
+                                        "tipoUnidadeGestora": "FUNDO",
+                                        "denominacaoPara": "para Fundo Municipal de Habitação de Interesse Social"
+                                    },
+                                    "desc": "Fundo Municipal de Habitação de Interesse Social",
+                                    "valueClass": "com.publica.portal.dominio.unidade.gestora.PortalUnidadeGestoraPojo",
+                                    "params": {}
+                                },
+                                {
+                                    "value": {
+                                        "id": 15,
+                                        "version": null,
+                                        "codigo": 16,
+                                        "idIndex": 13,
+                                        "denominacao": "Fundo Municipal de Saneamento",
+                                        "inscricaoEstadual": null,
+                                        "telefone": null,
+                                        "email": null,
+                                        "homePage": null,
+                                        "tipoUnidadeGestora": "FUNDO",
+                                        "denominacaoPara": "para Fundo Municipal de Saneamento"
+                                    },
+                                    "desc": "Fundo Municipal de Saneamento",
+                                    "valueClass": "com.publica.portal.dominio.unidade.gestora.PortalUnidadeGestoraPojo",
+                                    "params": {}
+                                },
+                                {
+                                    "value": {
+                                        "id": 16,
+                                        "version": null,
+                                        "codigo": 9,
+                                        "idIndex": 14,
+                                        "denominacao": "Fundo Municipal de Saúde ",
+                                        "inscricaoEstadual": null,
+                                        "telefone": null,
+                                        "email": null,
+                                        "homePage": null,
+                                        "tipoUnidadeGestora": "FUNDO",
+                                        "denominacaoPara": "para Fundo Municipal de Saúde "
+                                    },
+                                    "desc": "Fundo Municipal de Saúde ",
+                                    "valueClass": "com.publica.portal.dominio.unidade.gestora.PortalUnidadeGestoraPojo",
+                                    "params": {}
+                                },
+                                {
+                                    "value": {
+                                        "id": 17,
+                                        "version": null,
+                                        "codigo": 24,
+                                        "idIndex": 15,
+                                        "denominacao": "Fundo Municipal de Trânsito",
+                                        "inscricaoEstadual": null,
+                                        "telefone": null,
+                                        "email": null,
+                                        "homePage": null,
+                                        "tipoUnidadeGestora": "FUNDO",
+                                        "denominacaoPara": "para Fundo Municipal de Trânsito"
+                                    },
+                                    "desc": "Fundo Municipal de Trânsito",
+                                    "valueClass": "com.publica.portal.dominio.unidade.gestora.PortalUnidadeGestoraPojo",
+                                    "params": {}
+                                },
+                                {
+                                    "value": {
+                                        "id": 18,
+                                        "version": null,
+                                        "codigo": 13,
+                                        "idIndex": 16,
+                                        "denominacao": "Instituto de Geração de Oportunidades - IGEOF",
+                                        "inscricaoEstadual": null,
+                                        "telefone": null,
+                                        "email": null,
+                                        "homePage": null,
+                                        "tipoUnidadeGestora": "FUNDO",
+                                        "denominacaoPara": "para Instituto de Geração de Oportunidades - IGEOF"
+                                    },
+                                    "desc": "Instituto de Geração de Oportunidades - IGEOF",
+                                    "valueClass": "com.publica.portal.dominio.unidade.gestora.PortalUnidadeGestoraPojo",
+                                    "params": {}
+                                },
+                                {
+                                    "value": {
+                                        "id": 19,
+                                        "version": null,
+                                        "codigo": 7,
+                                        "idIndex": 17,
+                                        "denominacao": "Instituto de Planejamento Urbano - IPUF",
+                                        "inscricaoEstadual": null,
+                                        "telefone": null,
+                                        "email": null,
+                                        "homePage": null,
+                                        "tipoUnidadeGestora": "FUNDO",
+                                        "denominacaoPara": "para Instituto de Planejamento Urbano - IPUF"
+                                    },
+                                    "desc": "Instituto de Planejamento Urbano - IPUF",
+                                    "valueClass": "com.publica.portal.dominio.unidade.gestora.PortalUnidadeGestoraPojo",
+                                    "params": {}
+                                },
+                                {
+                                    "value": {
+                                        "id": 20,
+                                        "version": null,
+                                        "codigo": 22,
+                                        "idIndex": 18,
+                                        "denominacao": "Instituto de Previdência Social dos Servidores Públicos ",
+                                        "inscricaoEstadual": null,
+                                        "telefone": null,
+                                        "email": null,
+                                        "homePage": null,
+                                        "tipoUnidadeGestora": "INSTITUTO_PREVIDENCIA_UNICO",
+                                        "denominacaoPara": "para Instituto de Previdência Social dos Servidores Públicos "
+                                    },
+                                    "desc": "Instituto de Previdência Social dos Servidores Públicos ",
+                                    "valueClass": "com.publica.portal.dominio.unidade.gestora.PortalUnidadeGestoraPojo",
+                                    "params": {}
+                                },
+                                {
+                                    "value": {
+                                        "id": 21,
+                                        "version": null,
+                                        "codigo": 12,
+                                        "idIndex": 19,
+                                        "denominacao": "Autarquia de Melhoramentos da Capital",
+                                        "inscricaoEstadual": null,
+                                        "telefone": null,
+                                        "email": null,
+                                        "homePage": null,
+                                        "tipoUnidadeGestora": "AUTARQUIA",
+                                        "denominacaoPara": "para Autarquia de Melhoramentos da Capital"
+                                    },
+                                    "desc": "Autarquia de Melhoramentos da Capital",
+                                    "valueClass": "com.publica.portal.dominio.unidade.gestora.PortalUnidadeGestoraPojo",
+                                    "params": {}
+                                },
+                                {
+                                    "value": {
+                                        "id": 22,
+                                        "version": null,
+                                        "codigo": 1,
+                                        "idIndex": 20,
+                                        "denominacao": "Prefeitura Municipal de Florianópolis ",
+                                        "inscricaoEstadual": null,
+                                        "telefone": null,
+                                        "email": null,
+                                        "homePage": null,
+                                        "tipoUnidadeGestora": "PREFEITURA",
+                                        "denominacaoPara": "para Prefeitura Municipal de Florianópolis "
+                                    },
+                                    "desc": "Prefeitura Municipal de Florianópolis ",
+                                    "valueClass": "com.publica.portal.dominio.unidade.gestora.PortalUnidadeGestoraPojo",
+                                    "params": {}
+                                },
+                                {
+                                    "value": {
+                                        "id": 23,
+                                        "version": null,
+                                        "codigo": 4,
+                                        "idIndex": 21,
+                                        "denominacao": "Fundação Cultural de Florianópolis Franklin Cascaes",
+                                        "inscricaoEstadual": null,
+                                        "telefone": null,
+                                        "email": null,
+                                        "homePage": null,
+                                        "tipoUnidadeGestora": "FUNDACAO",
+                                        "denominacaoPara": "para Fundação Cultural de Florianópolis Franklin Cascaes"
+                                    },
+                                    "desc": "Fundação Cultural de Florianópolis Franklin Cascaes",
+                                    "valueClass": "com.publica.portal.dominio.unidade.gestora.PortalUnidadeGestoraPojo",
+                                    "params": {}
+                                }
+                            ],
+                            "hideCondition": true
+                        },
+                        "disabled": false,
+                        "defaultValueCompare": null,
+                        "defaultValue": null,
+                        "defaultValueKey": null
+                    },
+                    {
+                        "searchType": "ADVANCED",
+                        "searchRestrictionType": "PERIODO",
+                        "property": "licitacao.dataEmissao",
+                        "label": "Período",
+                        "placeholder": "",
+                        "searchDefault": true,
+                        "allowAddChildren": true,
+                        "condition": {
+                            "value": "ENTRE",
+                            "desc": "Entre",
+                            "valueClass": "com.publica.base.web.components.search.SearchCondition",
+                            "params": {},
+                            "icon": "epublica-icon-exchange-alt"
+                        },
+                        "classEnum": null,
+                        "params": {
+                            "defaultValueCompare": "2025-07-30",
+                            "acceptEmpty": true,
+                            "defaultValue": "2024-07-30",
+                            "hideCondition": true,
+                            "filterCurrentYear": false
+                        },
+                        "disabled": false,
+                        "defaultValueCompare": "2025-07-30",
+                        "defaultValue": "2024-07-30",
+                        "defaultValueKey": null,
+                        "value": "2025-06-01",
+                        "valueCompare": "2025-06-30"
+                    },
+                    {
+                        "searchType": "ADVANCED",
+                        "searchRestrictionType": "ENUM_POJO_STRING",
+                        "property": "licitacao.modalidade",
+                        "label": "Modalidade",
+                        "placeholder": "",
+                        "searchDefault": true,
+                        "allowAddChildren": true,
+                        "condition": {
+                            "value": "IGUAL",
+                            "desc": "Igual",
+                            "valueClass": "com.publica.base.web.components.search.SearchCondition",
+                            "params": {},
+                            "icon": "epublica-icon-equals"
+                        },
+                        "classEnum": null,
+                        "params": {
+                            "values": [
+                                {
+                                    "value": "Concorrência",
+                                    "desc": "Concorrência",
+                                    "valueClass": "java.lang.String",
+                                    "params": {}
+                                },
+                                {
+                                    "value": "Concurso",
+                                    "desc": "Concurso",
+                                    "valueClass": "java.lang.String",
+                                    "params": {}
+                                },
+                                {
+                                    "value": "Convite",
+                                    "desc": "Convite",
+                                    "valueClass": "java.lang.String",
+                                    "params": {}
+                                },
+                                {
+                                    "value": "Credenciamento",
+                                    "desc": "Credenciamento",
+                                    "valueClass": "java.lang.String",
+                                    "params": {}
+                                },
+                                {
+                                    "value": "Dispensa",
+                                    "desc": "Dispensa",
+                                    "valueClass": "java.lang.String",
+                                    "params": {}
+                                },
+                                {
+                                    "value": "Diálogo Competitivo",
+                                    "desc": "Diálogo Competitivo",
+                                    "valueClass": "java.lang.String",
+                                    "params": {}
+                                },
+                                {
+                                    "value": "Inexigibilidade",
+                                    "desc": "Inexigibilidade",
+                                    "valueClass": "java.lang.String",
+                                    "params": {}
+                                },
+                                {
+                                    "value": "Leilão",
+                                    "desc": "Leilão",
+                                    "valueClass": "java.lang.String",
+                                    "params": {}
+                                },
+                                {
+                                    "value": "Outros",
+                                    "desc": "Outros",
+                                    "valueClass": "java.lang.String",
+                                    "params": {}
+                                },
+                                {
+                                    "value": "Pregão Eletrônico",
+                                    "desc": "Pregão Eletrônico",
+                                    "valueClass": "java.lang.String",
+                                    "params": {}
+                                },
+                                {
+                                    "value": "Pregão Presencial",
+                                    "desc": "Pregão Presencial",
+                                    "valueClass": "java.lang.String",
+                                    "params": {}
+                                },
+                                {
+                                    "value": "Tomada de Preço",
+                                    "desc": "Tomada de Preço",
+                                    "valueClass": "java.lang.String",
+                                    "params": {}
+                                }
+                            ],
+                            "hideCondition": true
+                        },
+                        "disabled": false,
+                        "defaultValueCompare": null,
+                        "defaultValue": null,
+                        "defaultValueKey": null
+                    },
+                    {
+                        "searchType": "ADVANCED",
+                        "searchRestrictionType": "ENUM_POJO_STRING",
+                        "property": "situacao",
+                        "label": "Situação",
+                        "placeholder": "",
+                        "searchDefault": true,
+                        "allowAddChildren": true,
+                        "condition": {
+                            "value": "IGUAL",
+                            "desc": "Igual",
+                            "valueClass": "com.publica.base.web.components.search.SearchCondition",
+                            "params": {},
+                            "icon": "epublica-icon-equals"
+                        },
+                        "classEnum": null,
+                        "params": {
+                            "values": [
+                                {
+                                    "value": "Aberto",
+                                    "desc": "Aberto",
+                                    "valueClass": "java.lang.String",
+                                    "params": {}
+                                },
+                                {
+                                    "value": "Anulado",
+                                    "desc": "Anulado",
+                                    "valueClass": "java.lang.String",
+                                    "params": {}
+                                },
+                                {
+                                    "value": "Cancelado",
+                                    "desc": "Cancelado",
+                                    "valueClass": "java.lang.String",
+                                    "params": {}
+                                },
+                                {
+                                    "value": "Deserto",
+                                    "desc": "Deserto",
+                                    "valueClass": "java.lang.String",
+                                    "params": {}
+                                },
+                                {
+                                    "value": "Finalizado",
+                                    "desc": "Finalizado",
+                                    "valueClass": "java.lang.String",
+                                    "params": {}
+                                },
+                                {
+                                    "value": "Fracassado",
+                                    "desc": "Fracassado",
+                                    "valueClass": "java.lang.String",
+                                    "params": {}
+                                },
+                                {
+                                    "value": "Homologado",
+                                    "desc": "Homologado",
+                                    "valueClass": "java.lang.String",
+                                    "params": {}
+                                },
+                                {
+                                    "value": "Revogado",
+                                    "desc": "Revogado",
+                                    "valueClass": "java.lang.String",
+                                    "params": {}
+                                },
+                                {
+                                    "value": "Suspenso",
+                                    "desc": "Suspenso",
+                                    "valueClass": "java.lang.String",
+                                    "params": {}
+                                }
+                            ],
+                            "hideCondition": true
+                        },
+                        "disabled": false,
+                        "defaultValueCompare": null,
+                        "defaultValue": null,
+                        "defaultValueKey": null
+                    },
+                    {
+                        "searchType": "ADVANCED",
+                        "searchRestrictionType": "MULTI_FIELD",
+                        "property": "licitacao.numero",
+                        "label": "Palavra-chave",
+                        "placeholder": "",
+                        "searchDefault": true,
+                        "allowAddChildren": true,
+                        "condition": {
+                            "value": "CONTEM",
+                            "desc": "Contém",
+                            "valueClass": "com.publica.base.web.components.search.SearchCondition",
+                            "params": {},
+                            "icon": "epublica-icon-th"
+                        },
+                        "classEnum": null,
+                        "params": {
+                            "hideCondition": true
+                        },
+                        "disabled": false,
+                        "defaultValueCompare": null,
+                        "defaultValue": null,
+                        "defaultValueKey": null
+                    }
+                ]
+            }
+        ],
+        "searchProperties": {
+            "Filtrar porlicitacao.dataEmissao": {
+                "separator": {
+                    "name": "Filtrar por",
+                    "hide": true,
+                    "components": [
+                        {
+                            "search": {
+                                "searchType": "ADVANCED",
+                                "searchRestrictionType": "MULTI_ENUM_POJO",
+                                "property": "listUnidadesGestoras",
+                                "label": "<span>Unidade gestora</span>",
+                                "placeholder": "",
+                                "searchDefault": true,
+                                "allowAddChildren": true,
+                                "condition": {
+                                    "value": "IGUAL",
+                                    "desc": "Igual",
+                                    "valueClass": "com.publica.base.web.components.search.SearchCondition",
+                                    "params": {},
+                                    "icon": "epublica-icon-equals"
+                                },
+                                "classEnum": null,
+                                "params": {
+                                    "nestedName": "groupByUnidadeGestora",
+                                    "values": [
+                                        {
+                                            "value": {
+                                                "id": 3,
+                                                "version": null,
+                                                "codigo": 6,
+                                                "idIndex": 1,
+                                                "denominacao": "Fundação Municipal do Meio Ambiente",
+                                                "inscricaoEstadual": null,
+                                                "telefone": null,
+                                                "email": null,
+                                                "homePage": null,
+                                                "tipoUnidadeGestora": "FUNDACAO",
+                                                "denominacaoPara": "para Fundação Municipal do Meio Ambiente"
+                                            },
+                                            "desc": "Fundação Municipal do Meio Ambiente",
+                                            "valueClass": "com.publica.portal.dominio.unidade.gestora.PortalUnidadeGestoraPojo",
+                                            "params": {}
+                                        },
+                                        {
+                                            "value": {
+                                                "id": 4,
+                                                "version": null,
+                                                "codigo": 5,
+                                                "idIndex": 2,
+                                                "denominacao": "Fundação Municipal de Esportes",
+                                                "inscricaoEstadual": null,
+                                                "telefone": null,
+                                                "email": null,
+                                                "homePage": null,
+                                                "tipoUnidadeGestora": "FUNDACAO",
+                                                "denominacaoPara": "para Fundação Municipal de Esportes"
+                                            },
+                                            "desc": "Fundação Municipal de Esportes",
+                                            "valueClass": "com.publica.portal.dominio.unidade.gestora.PortalUnidadeGestoraPojo",
+                                            "params": {}
+                                        },
+                                        {
+                                            "value": {
+                                                "id": 5,
+                                                "version": null,
+                                                "codigo": 25,
+                                                "idIndex": 3,
+                                                "denominacao": "Fundação Rede Solidária Somar Floripa",
+                                                "inscricaoEstadual": null,
+                                                "telefone": null,
+                                                "email": null,
+                                                "homePage": null,
+                                                "tipoUnidadeGestora": "FUNDACAO",
+                                                "denominacaoPara": "para Fundação Rede Solidária Somar Floripa"
+                                            },
+                                            "desc": "Fundação Rede Solidária Somar Floripa",
+                                            "valueClass": "com.publica.portal.dominio.unidade.gestora.PortalUnidadeGestoraPojo",
+                                            "params": {}
+                                        },
+                                        {
+                                            "value": {
+                                                "id": 6,
+                                                "version": null,
+                                                "codigo": 10,
+                                                "idIndex": 4,
+                                                "denominacao": "Fundo Municipal de Assistência Social",
+                                                "inscricaoEstadual": null,
+                                                "telefone": null,
+                                                "email": null,
+                                                "homePage": null,
+                                                "tipoUnidadeGestora": "FUNDO",
+                                                "denominacaoPara": "para Fundo Municipal de Assistência Social"
+                                            },
+                                            "desc": "Fundo Municipal de Assistência Social",
+                                            "valueClass": "com.publica.portal.dominio.unidade.gestora.PortalUnidadeGestoraPojo",
+                                            "params": {}
+                                        },
+                                        {
+                                            "value": {
+                                                "id": 7,
+                                                "version": null,
+                                                "codigo": 2,
+                                                "idIndex": 5,
+                                                "denominacao": "Fundo Municipal de Cinema - FUNCINE",
+                                                "inscricaoEstadual": null,
+                                                "telefone": null,
+                                                "email": null,
+                                                "homePage": null,
+                                                "tipoUnidadeGestora": "FUNDO",
+                                                "denominacaoPara": "para Fundo Municipal de Cinema - FUNCINE"
+                                            },
+                                            "desc": "Fundo Municipal de Cinema - FUNCINE",
+                                            "valueClass": "com.publica.portal.dominio.unidade.gestora.PortalUnidadeGestoraPojo",
+                                            "params": {}
+                                        },
+                                        {
+                                            "value": {
+                                                "id": 8,
+                                                "version": null,
+                                                "codigo": 23,
+                                                "idIndex": 6,
+                                                "denominacao": "Fundo Municipal de Inovação",
+                                                "inscricaoEstadual": null,
+                                                "telefone": null,
+                                                "email": null,
+                                                "homePage": null,
+                                                "tipoUnidadeGestora": "FUNDO",
+                                                "denominacaoPara": "para Fundo Municipal de Inovação"
+                                            },
+                                            "desc": "Fundo Municipal de Inovação",
+                                            "valueClass": "com.publica.portal.dominio.unidade.gestora.PortalUnidadeGestoraPojo",
+                                            "params": {}
+                                        },
+                                        {
+                                            "value": {
+                                                "id": 9,
+                                                "version": null,
+                                                "codigo": 20,
+                                                "idIndex": 7,
+                                                "denominacao": "Fundo Municipal de Turismo",
+                                                "inscricaoEstadual": null,
+                                                "telefone": null,
+                                                "email": null,
+                                                "homePage": null,
+                                                "tipoUnidadeGestora": "FUNDO",
+                                                "denominacaoPara": "para Fundo Municipal de Turismo"
+                                            },
+                                            "desc": "Fundo Municipal de Turismo",
+                                            "valueClass": "com.publica.portal.dominio.unidade.gestora.PortalUnidadeGestoraPojo",
+                                            "params": {}
+                                        },
+                                        {
+                                            "value": {
+                                                "id": 10,
+                                                "version": null,
+                                                "codigo": 21,
+                                                "idIndex": 8,
+                                                "denominacao": "Fundo Municipal do Idoso",
+                                                "inscricaoEstadual": null,
+                                                "telefone": null,
+                                                "email": null,
+                                                "homePage": null,
+                                                "tipoUnidadeGestora": "FUNDO",
+                                                "denominacaoPara": "para Fundo Municipal do Idoso"
+                                            },
+                                            "desc": "Fundo Municipal do Idoso",
+                                            "valueClass": "com.publica.portal.dominio.unidade.gestora.PortalUnidadeGestoraPojo",
+                                            "params": {}
+                                        },
+                                        {
+                                            "value": {
+                                                "id": 11,
+                                                "version": null,
+                                                "codigo": 11,
+                                                "idIndex": 9,
+                                                "denominacao": "Fundo Municipal da Criança e do Adolescente",
+                                                "inscricaoEstadual": null,
+                                                "telefone": null,
+                                                "email": null,
+                                                "homePage": null,
+                                                "tipoUnidadeGestora": "FUNDO",
+                                                "denominacaoPara": "para Fundo Municipal da Criança e do Adolescente"
+                                            },
+                                            "desc": "Fundo Municipal da Criança e do Adolescente",
+                                            "valueClass": "com.publica.portal.dominio.unidade.gestora.PortalUnidadeGestoraPojo",
+                                            "params": {}
+                                        },
+                                        {
+                                            "value": {
+                                                "id": 12,
+                                                "version": null,
+                                                "codigo": 19,
+                                                "idIndex": 10,
+                                                "denominacao": "Fundo Municipal de Emergência da Defesa Civil",
+                                                "inscricaoEstadual": null,
+                                                "telefone": null,
+                                                "email": null,
+                                                "homePage": null,
+                                                "tipoUnidadeGestora": "FUNDO",
+                                                "denominacaoPara": "para Fundo Municipal de Emergência da Defesa Civil"
+                                            },
+                                            "desc": "Fundo Municipal de Emergência da Defesa Civil",
+                                            "valueClass": "com.publica.portal.dominio.unidade.gestora.PortalUnidadeGestoraPojo",
+                                            "params": {}
+                                        },
+                                        {
+                                            "value": {
+                                                "id": 13,
+                                                "version": null,
+                                                "codigo": 14,
+                                                "idIndex": 11,
+                                                "denominacao": "FUMDESF - Fundo Municipal Promoção Empreendimento Desenvolvimento Comercial, Industrial, Rural e Marinho",
+                                                "inscricaoEstadual": null,
+                                                "telefone": null,
+                                                "email": null,
+                                                "homePage": null,
+                                                "tipoUnidadeGestora": "FUNDO",
+                                                "denominacaoPara": "para FUMDESF - Fundo Municipal Promoção Empreendimento Desenvolvimento Comercial, Industrial, Rural e Marinho"
+                                            },
+                                            "desc": "FUMDESF - Fundo Municipal Promoção Empreendimento Desenvolvimento Comercial, Industrial, Rural e Marinho",
+                                            "valueClass": "com.publica.portal.dominio.unidade.gestora.PortalUnidadeGestoraPojo",
+                                            "params": {}
+                                        },
+                                        {
+                                            "value": {
+                                                "id": 14,
+                                                "version": null,
+                                                "codigo": 8,
+                                                "idIndex": 12,
+                                                "denominacao": "Fundo Municipal de Habitação de Interesse Social",
+                                                "inscricaoEstadual": null,
+                                                "telefone": null,
+                                                "email": null,
+                                                "homePage": null,
+                                                "tipoUnidadeGestora": "FUNDO",
+                                                "denominacaoPara": "para Fundo Municipal de Habitação de Interesse Social"
+                                            },
+                                            "desc": "Fundo Municipal de Habitação de Interesse Social",
+                                            "valueClass": "com.publica.portal.dominio.unidade.gestora.PortalUnidadeGestoraPojo",
+                                            "params": {}
+                                        },
+                                        {
+                                            "value": {
+                                                "id": 15,
+                                                "version": null,
+                                                "codigo": 16,
+                                                "idIndex": 13,
+                                                "denominacao": "Fundo Municipal de Saneamento",
+                                                "inscricaoEstadual": null,
+                                                "telefone": null,
+                                                "email": null,
+                                                "homePage": null,
+                                                "tipoUnidadeGestora": "FUNDO",
+                                                "denominacaoPara": "para Fundo Municipal de Saneamento"
+                                            },
+                                            "desc": "Fundo Municipal de Saneamento",
+                                            "valueClass": "com.publica.portal.dominio.unidade.gestora.PortalUnidadeGestoraPojo",
+                                            "params": {}
+                                        },
+                                        {
+                                            "value": {
+                                                "id": 16,
+                                                "version": null,
+                                                "codigo": 9,
+                                                "idIndex": 14,
+                                                "denominacao": "Fundo Municipal de Saúde ",
+                                                "inscricaoEstadual": null,
+                                                "telefone": null,
+                                                "email": null,
+                                                "homePage": null,
+                                                "tipoUnidadeGestora": "FUNDO",
+                                                "denominacaoPara": "para Fundo Municipal de Saúde "
+                                            },
+                                            "desc": "Fundo Municipal de Saúde ",
+                                            "valueClass": "com.publica.portal.dominio.unidade.gestora.PortalUnidadeGestoraPojo",
+                                            "params": {}
+                                        },
+                                        {
+                                            "value": {
+                                                "id": 17,
+                                                "version": null,
+                                                "codigo": 24,
+                                                "idIndex": 15,
+                                                "denominacao": "Fundo Municipal de Trânsito",
+                                                "inscricaoEstadual": null,
+                                                "telefone": null,
+                                                "email": null,
+                                                "homePage": null,
+                                                "tipoUnidadeGestora": "FUNDO",
+                                                "denominacaoPara": "para Fundo Municipal de Trânsito"
+                                            },
+                                            "desc": "Fundo Municipal de Trânsito",
+                                            "valueClass": "com.publica.portal.dominio.unidade.gestora.PortalUnidadeGestoraPojo",
+                                            "params": {}
+                                        },
+                                        {
+                                            "value": {
+                                                "id": 18,
+                                                "version": null,
+                                                "codigo": 13,
+                                                "idIndex": 16,
+                                                "denominacao": "Instituto de Geração de Oportunidades - IGEOF",
+                                                "inscricaoEstadual": null,
+                                                "telefone": null,
+                                                "email": null,
+                                                "homePage": null,
+                                                "tipoUnidadeGestora": "FUNDO",
+                                                "denominacaoPara": "para Instituto de Geração de Oportunidades - IGEOF"
+                                            },
+                                            "desc": "Instituto de Geração de Oportunidades - IGEOF",
+                                            "valueClass": "com.publica.portal.dominio.unidade.gestora.PortalUnidadeGestoraPojo",
+                                            "params": {}
+                                        },
+                                        {
+                                            "value": {
+                                                "id": 19,
+                                                "version": null,
+                                                "codigo": 7,
+                                                "idIndex": 17,
+                                                "denominacao": "Instituto de Planejamento Urbano - IPUF",
+                                                "inscricaoEstadual": null,
+                                                "telefone": null,
+                                                "email": null,
+                                                "homePage": null,
+                                                "tipoUnidadeGestora": "FUNDO",
+                                                "denominacaoPara": "para Instituto de Planejamento Urbano - IPUF"
+                                            },
+                                            "desc": "Instituto de Planejamento Urbano - IPUF",
+                                            "valueClass": "com.publica.portal.dominio.unidade.gestora.PortalUnidadeGestoraPojo",
+                                            "params": {}
+                                        },
+                                        {
+                                            "value": {
+                                                "id": 20,
+                                                "version": null,
+                                                "codigo": 22,
+                                                "idIndex": 18,
+                                                "denominacao": "Instituto de Previdência Social dos Servidores Públicos ",
+                                                "inscricaoEstadual": null,
+                                                "telefone": null,
+                                                "email": null,
+                                                "homePage": null,
+                                                "tipoUnidadeGestora": "INSTITUTO_PREVIDENCIA_UNICO",
+                                                "denominacaoPara": "para Instituto de Previdência Social dos Servidores Públicos "
+                                            },
+                                            "desc": "Instituto de Previdência Social dos Servidores Públicos ",
+                                            "valueClass": "com.publica.portal.dominio.unidade.gestora.PortalUnidadeGestoraPojo",
+                                            "params": {}
+                                        },
+                                        {
+                                            "value": {
+                                                "id": 21,
+                                                "version": null,
+                                                "codigo": 12,
+                                                "idIndex": 19,
+                                                "denominacao": "Autarquia de Melhoramentos da Capital",
+                                                "inscricaoEstadual": null,
+                                                "telefone": null,
+                                                "email": null,
+                                                "homePage": null,
+                                                "tipoUnidadeGestora": "AUTARQUIA",
+                                                "denominacaoPara": "para Autarquia de Melhoramentos da Capital"
+                                            },
+                                            "desc": "Autarquia de Melhoramentos da Capital",
+                                            "valueClass": "com.publica.portal.dominio.unidade.gestora.PortalUnidadeGestoraPojo",
+                                            "params": {}
+                                        },
+                                        {
+                                            "value": {
+                                                "id": 22,
+                                                "version": null,
+                                                "codigo": 1,
+                                                "idIndex": 20,
+                                                "denominacao": "Prefeitura Municipal de Florianópolis ",
+                                                "inscricaoEstadual": null,
+                                                "telefone": null,
+                                                "email": null,
+                                                "homePage": null,
+                                                "tipoUnidadeGestora": "PREFEITURA",
+                                                "denominacaoPara": "para Prefeitura Municipal de Florianópolis "
+                                            },
+                                            "desc": "Prefeitura Municipal de Florianópolis ",
+                                            "valueClass": "com.publica.portal.dominio.unidade.gestora.PortalUnidadeGestoraPojo",
+                                            "params": {}
+                                        },
+                                        {
+                                            "value": {
+                                                "id": 23,
+                                                "version": null,
+                                                "codigo": 4,
+                                                "idIndex": 21,
+                                                "denominacao": "Fundação Cultural de Florianópolis Franklin Cascaes",
+                                                "inscricaoEstadual": null,
+                                                "telefone": null,
+                                                "email": null,
+                                                "homePage": null,
+                                                "tipoUnidadeGestora": "FUNDACAO",
+                                                "denominacaoPara": "para Fundação Cultural de Florianópolis Franklin Cascaes"
+                                            },
+                                            "desc": "Fundação Cultural de Florianópolis Franklin Cascaes",
+                                            "valueClass": "com.publica.portal.dominio.unidade.gestora.PortalUnidadeGestoraPojo",
+                                            "params": {}
+                                        }
+                                    ],
+                                    "hideCondition": true
+                                },
+                                "disabled": false,
+                                "defaultValueCompare": null,
+                                "defaultValue": null,
+                                "defaultValueKey": null
+                            },
+                            "childs": []
+                        },
+                        {
+                            "search": {
+                                "searchType": "ADVANCED",
+                                "searchRestrictionType": "PERIODO",
+                                "property": "licitacao.dataEmissao",
+                                "label": "Período",
+                                "placeholder": "",
+                                "searchDefault": true,
+                                "allowAddChildren": true,
+                                "condition": {
+                                    "value": "ENTRE",
+                                    "desc": "Entre",
+                                    "valueClass": "com.publica.base.web.components.search.SearchCondition",
+                                    "params": {},
+                                    "icon": "epublica-icon-exchange-alt"
+                                },
+                                "classEnum": null,
+                                "params": {
+                                    "defaultValueCompare": "2025-07-30",
+                                    "acceptEmpty": true,
+                                    "defaultValue": "2024-07-30",
+                                    "hideCondition": true,
+                                    "filterCurrentYear": false
+                                },
+                                "disabled": false,
+                                "defaultValueCompare": "2025-07-30",
+                                "defaultValue": "2024-07-30",
+                                "defaultValueKey": null,
+                                "value": "2025-06-01",
+                                "valueCompare": "2025-06-30"
+                            },
+                            "childs": []
+                        },
+                        {
+                            "search": {
+                                "searchType": "ADVANCED",
+                                "searchRestrictionType": "ENUM_POJO_STRING",
+                                "property": "licitacao.modalidade",
+                                "label": "Modalidade",
+                                "placeholder": "",
+                                "searchDefault": true,
+                                "allowAddChildren": true,
+                                "condition": {
+                                    "value": "IGUAL",
+                                    "desc": "Igual",
+                                    "valueClass": "com.publica.base.web.components.search.SearchCondition",
+                                    "params": {},
+                                    "icon": "epublica-icon-equals"
+                                },
+                                "classEnum": null,
+                                "params": {
+                                    "values": [
+                                        {
+                                            "value": "Concorrência",
+                                            "desc": "Concorrência",
+                                            "valueClass": "java.lang.String",
+                                            "params": {}
+                                        },
+                                        {
+                                            "value": "Concurso",
+                                            "desc": "Concurso",
+                                            "valueClass": "java.lang.String",
+                                            "params": {}
+                                        },
+                                        {
+                                            "value": "Convite",
+                                            "desc": "Convite",
+                                            "valueClass": "java.lang.String",
+                                            "params": {}
+                                        },
+                                        {
+                                            "value": "Credenciamento",
+                                            "desc": "Credenciamento",
+                                            "valueClass": "java.lang.String",
+                                            "params": {}
+                                        },
+                                        {
+                                            "value": "Dispensa",
+                                            "desc": "Dispensa",
+                                            "valueClass": "java.lang.String",
+                                            "params": {}
+                                        },
+                                        {
+                                            "value": "Diálogo Competitivo",
+                                            "desc": "Diálogo Competitivo",
+                                            "valueClass": "java.lang.String",
+                                            "params": {}
+                                        },
+                                        {
+                                            "value": "Inexigibilidade",
+                                            "desc": "Inexigibilidade",
+                                            "valueClass": "java.lang.String",
+                                            "params": {}
+                                        },
+                                        {
+                                            "value": "Leilão",
+                                            "desc": "Leilão",
+                                            "valueClass": "java.lang.String",
+                                            "params": {}
+                                        },
+                                        {
+                                            "value": "Outros",
+                                            "desc": "Outros",
+                                            "valueClass": "java.lang.String",
+                                            "params": {}
+                                        },
+                                        {
+                                            "value": "Pregão Eletrônico",
+                                            "desc": "Pregão Eletrônico",
+                                            "valueClass": "java.lang.String",
+                                            "params": {}
+                                        },
+                                        {
+                                            "value": "Pregão Presencial",
+                                            "desc": "Pregão Presencial",
+                                            "valueClass": "java.lang.String",
+                                            "params": {}
+                                        },
+                                        {
+                                            "value": "Tomada de Preço",
+                                            "desc": "Tomada de Preço",
+                                            "valueClass": "java.lang.String",
+                                            "params": {}
+                                        }
+                                    ],
+                                    "hideCondition": true
+                                },
+                                "disabled": false,
+                                "defaultValueCompare": null,
+                                "defaultValue": null,
+                                "defaultValueKey": null
+                            },
+                            "childs": []
+                        },
+                        {
+                            "search": {
+                                "searchType": "ADVANCED",
+                                "searchRestrictionType": "ENUM_POJO_STRING",
+                                "property": "situacao",
+                                "label": "Situação",
+                                "placeholder": "",
+                                "searchDefault": true,
+                                "allowAddChildren": true,
+                                "condition": {
+                                    "value": "IGUAL",
+                                    "desc": "Igual",
+                                    "valueClass": "com.publica.base.web.components.search.SearchCondition",
+                                    "params": {},
+                                    "icon": "epublica-icon-equals"
+                                },
+                                "classEnum": null,
+                                "params": {
+                                    "values": [
+                                        {
+                                            "value": "Aberto",
+                                            "desc": "Aberto",
+                                            "valueClass": "java.lang.String",
+                                            "params": {}
+                                        },
+                                        {
+                                            "value": "Anulado",
+                                            "desc": "Anulado",
+                                            "valueClass": "java.lang.String",
+                                            "params": {}
+                                        },
+                                        {
+                                            "value": "Cancelado",
+                                            "desc": "Cancelado",
+                                            "valueClass": "java.lang.String",
+                                            "params": {}
+                                        },
+                                        {
+                                            "value": "Deserto",
+                                            "desc": "Deserto",
+                                            "valueClass": "java.lang.String",
+                                            "params": {}
+                                        },
+                                        {
+                                            "value": "Finalizado",
+                                            "desc": "Finalizado",
+                                            "valueClass": "java.lang.String",
+                                            "params": {}
+                                        },
+                                        {
+                                            "value": "Fracassado",
+                                            "desc": "Fracassado",
+                                            "valueClass": "java.lang.String",
+                                            "params": {}
+                                        },
+                                        {
+                                            "value": "Homologado",
+                                            "desc": "Homologado",
+                                            "valueClass": "java.lang.String",
+                                            "params": {}
+                                        },
+                                        {
+                                            "value": "Revogado",
+                                            "desc": "Revogado",
+                                            "valueClass": "java.lang.String",
+                                            "params": {}
+                                        },
+                                        {
+                                            "value": "Suspenso",
+                                            "desc": "Suspenso",
+                                            "valueClass": "java.lang.String",
+                                            "params": {}
+                                        }
+                                    ],
+                                    "hideCondition": true
+                                },
+                                "disabled": false,
+                                "defaultValueCompare": null,
+                                "defaultValue": null,
+                                "defaultValueKey": null
+                            },
+                            "childs": []
+                        },
+                        {
+                            "search": {
+                                "searchType": "ADVANCED",
+                                "searchRestrictionType": "MULTI_FIELD",
+                                "property": "licitacao.numero",
+                                "label": "Palavra-chave",
+                                "placeholder": "",
+                                "searchDefault": true,
+                                "allowAddChildren": true,
+                                "condition": {
+                                    "value": "CONTEM",
+                                    "desc": "Contém",
+                                    "valueClass": "com.publica.base.web.components.search.SearchCondition",
+                                    "params": {},
+                                    "icon": "epublica-icon-th"
+                                },
+                                "classEnum": null,
+                                "params": {
+                                    "hideCondition": true
+                                },
+                                "disabled": false,
+                                "defaultValueCompare": null,
+                                "defaultValue": null,
+                                "defaultValueKey": null
+                            },
+                            "childs": []
+                        }
+                    ]
+                },
+                "property": "licitacao.dataEmissao",
+                "key": "licitacao.dataEmissao",
+                "searchType": "ADVANCED",
+                "searchRestrictionType": "PERIODO",
+                "allowAddChildren": true,
+                "label": "Período",
+                "condition": {
+                    "value": "ENTRE",
+                    "desc": "Entre",
+                    "valueClass": "com.publica.base.web.components.search.SearchCondition",
+                    "params": {},
+                    "icon": "epublica-icon-exchange-alt"
+                },
+                "params": {
+                    "defaultValueCompare": "2025-07-30",
+                    "acceptEmpty": true,
+                    "defaultValue": "2024-07-30",
+                    "hideCondition": true,
+                    "filterCurrentYear": false
+                },
+                "value": "2025-06-01",
+                "valueCompare": "2025-06-30",
+                "childs": []
+            }
+        },
+        "searchOrders": null,
+        "searchLoaded": false,
+        "operators": [
+            {
+                "value": "OU",
+                "desc": "Ou",
+                "valueClass": "com.publica.base.web.components.search.SearchOperator",
+                "params": {}
+            },
+            {
+                "value": "E",
+                "desc": "E",
+                "valueClass": "com.publica.base.web.components.search.SearchOperator",
+                "params": {}
+            }
+        ],
+        "conditions": [
+            {
+                "value": "CONTEM",
+                "desc": "Contém",
+                "valueClass": "com.publica.base.web.components.search.SearchCondition",
+                "params": {
+                    "types": [
+                        "TEXT",
+                        "MULTI_FIELD"
+                    ]
+                },
+                "icon": "epublica-icon-th"
+            },
+            {
+                "value": "IGUAL",
+                "desc": "Igual",
+                "valueClass": "com.publica.base.web.components.search.SearchCondition",
+                "params": {
+                    "types": [
+                        "TEXT",
+                        "DATE",
+                        "DATE_TIME",
+                        "ENUM",
+                        "SELECT",
+                        "MULTI_SELECT",
+                        "LONG",
+                        "ENUM_POJO",
+                        "MULTI_ENUM",
+                        "DECIMAL",
+                        "INTEGER",
+                        "MASKED",
+                        "MONTH_YEAR",
+                        "MULTI_ENUM_POJO"
+                    ]
+                },
+                "icon": "epublica-icon-equals"
+            },
+            {
+                "value": "DIFERENTE",
+                "desc": "Diferente",
+                "valueClass": "com.publica.base.web.components.search.SearchCondition",
+                "params": {
+                    "types": [
+                        "TEXT",
+                        "DATE",
+                        "DATE_TIME",
+                        "ENUM",
+                        "SELECT",
+                        "MULTI_SELECT",
+                        "LONG",
+                        "ENUM_POJO",
+                        "MULTI_ENUM",
+                        "INTEGER",
+                        "MASKED",
+                        "MONTH_YEAR",
+                        "MULTI_ENUM_POJO"
+                    ]
+                },
+                "icon": "epublica-icon-not-equal"
+            },
+            {
+                "value": "COMECA_COM",
+                "desc": "Começa com",
+                "valueClass": "com.publica.base.web.components.search.SearchCondition",
+                "params": {
+                    "types": [
+                        "TEXT"
+                    ]
+                },
+                "icon": "epublica-icon-sort-alpha-up"
+            },
+            {
+                "value": "TEMINA_COM",
+                "desc": "Termina com",
+                "valueClass": "com.publica.base.web.components.search.SearchCondition",
+                "params": {
+                    "types": [
+                        "TEXT"
+                    ]
+                },
+                "icon": "epublica-icon-sort-alpha-down"
+            },
+            {
+                "value": "MAIOR_QUE",
+                "desc": "Maior que",
+                "valueClass": "com.publica.base.web.components.search.SearchCondition",
+                "params": {
+                    "types": [
+                        "LONG",
+                        "DATE",
+                        "DATE_TIME",
+                        "INTEGER",
+                        "MONTH_YEAR"
+                    ]
+                },
+                "icon": "custom-core-icon-chevron-right"
+            },
+            {
+                "value": "MENOR_QUE",
+                "desc": "Menor que",
+                "valueClass": "com.publica.base.web.components.search.SearchCondition",
+                "params": {
+                    "types": [
+                        "LONG",
+                        "DATE",
+                        "DATE_TIME",
+                        "INTEGER",
+                        "MONTH_YEAR"
+                    ]
+                },
+                "icon": "custom-core-icon-chevron-left"
+            },
+            {
+                "value": "ENTRE",
+                "desc": "Entre",
+                "valueClass": "com.publica.base.web.components.search.SearchCondition",
+                "params": {
+                    "types": [
+                        "PERIODO",
+                        "PERIODO_DATE_TIME",
+                        "DECIMAL_ENTRE",
+                        "POJO_ENTRE"
+                    ]
+                },
+                "icon": "epublica-icon-exchange-alt"
+            }
+        ],
+        "advancedSearch": true
+    },
+    "rows": null,
+    "detailProperty": null,
+    "configuracoes": {}
+}
