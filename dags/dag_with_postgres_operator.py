@@ -18,6 +18,7 @@ with DAG(
         task_id='create_postgres_table',
         conn_id='postgres_localhost',
         sql="""
+            drop table if exists dag_runs;
             create table if not exists dag_runs(
                 dt date,
                 dag_id character varying,
@@ -25,4 +26,17 @@ with DAG(
             )
         """
     )
-    task1
+    insert_text = f"insert into dag_runs(dt, dag_id) values ('{datetime.now().strftime("%Y-%m-%d")}','A')"
+
+    task2 = SQLExecuteQueryOperator(
+        task_id='insert_data',
+        conn_id='postgres_localhost',
+        sql=insert_text
+    )
+
+    task3 = SQLExecuteQueryOperator(
+        task_id='insert_from_file',
+        conn_id='postgres_localhost',
+        sql='/sql/example.sql'
+    )
+    task1 >> [task2, task3]
