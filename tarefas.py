@@ -60,6 +60,20 @@ def get_dados_internos():
                 print(id_licitacao)
     return registros
 
+def juntar_dados():
+    dados_api = get_dados_api()
+    dados_internos = get_dados_internos()
+    # Aqui você pode implementar a lógica para juntar os dois conjuntos de dados conforme necessário
+    # inserir advogado
+    # inserir licitação
+    # inserir contrato
+    # inserir empenho
+    # inserir itens
+    # inserir vencedores
+    # inserir textos
+    # inserir registros licitacao_unidade_gestora
+    return dados_api, dados_internos
+
 # get_dados_api()
 
 get_dados_internos()
