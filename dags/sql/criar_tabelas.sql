@@ -75,22 +75,24 @@ CREATE TABLE IF NOT EXISTS Item (
 );
 
 CREATE TABLE IF NOT EXISTS Vencedor (
-    id_licitacao INTEGER,
+    id_item INTEGER,
     id_fornecedor INTEGER,
     quantidade DECIMAL,
     valor_unitario DECIMAL,
     situacao VARCHAR,
-    PRIMARY KEY (id_licitacao, id_fornecedor),
-    FOREIGN KEY (id_licitacao) REFERENCES Licitacao (id_licitacao),
+    PRIMARY KEY (id_item, id_fornecedor),
+    FOREIGN KEY (id_item) REFERENCES Item (id_item),
     FOREIGN KEY (id_fornecedor) REFERENCES Fornecedor (id_fornecedor)
 );
 
 CREATE TABLE IF NOT EXISTS Texto (
     id_texto SERIAL PRIMARY KEY,
     id_licitacao INTEGER,
+    id_contrato INTEGER,
     denominacao VARCHAR,
     link VARCHAR,
-    FOREIGN KEY (id_licitacao) REFERENCES Licitacao (id_licitacao)
+    FOREIGN KEY (id_licitacao) REFERENCES Licitacao (id_licitacao),
+    FOREIGN KEY (id_contrato) REFERENCES Contrato (id_contrato)
 );
 
 CREATE TABLE IF NOT EXISTS Licitacao_Unidade_Gestora (
