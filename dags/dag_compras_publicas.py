@@ -11,7 +11,7 @@ default_args = {
 }
 
 @task
-def get_dados_api():
+def get_dados_api(is_licitacao=True):
     # hoje = datetime.today()
     hoje = datetime(2025, 9, 1)
     # primeiro_dia_mes_atual = hoje.replace(day=1)
@@ -19,12 +19,13 @@ def get_dados_api():
     # primeiro_dia_mes_passado = ultimo_dia_mes_passado.replace(day=1)
     # url_licitacoes = f'https://transparencia.e-publica.net:443/epublica-portal/rest/florianopolis/api/v1/licitacao?periodo_inicial={primeiro_dia_mes_passado.strftime("%d/%m/%Y")}&periodo_final={ultimo_dia_mes_passado.strftime("%d/%m/%Y")}'
     url_licitacoes = f'https://transparencia.e-publica.net:443/epublica-portal/rest/florianopolis/api/v1/licitacao?periodo_inicial={hoje.strftime("%d/%m/%Y")}&periodo_final={hoje.strftime("%d/%m/%Y")}'
-    response = requests.get(url_licitacoes)
+    url_contratos = f'https://transparencia.e-publica.net:443/epublica-portal/rest/florianopolis/api/v1/contrato?periodo_inicial={hoje.strftime("%d/%m/%Y")}&periodo_final={hoje.strftime("%d/%m/%Y")}'
+    response = requests.get(url_licitacoes) if is_licitacao else requests.get(url_contratos)
     dados = response.json()
     return dados['registros']
 
 @task
-def get_dados_internos():
+def get_dados_internos(is_licitacao=True):
     # hoje = datetime.today()
     hoje = datetime(2025, 9, 1)
     # primeiro_dia_mes_atual = hoje.replace(day=1)
@@ -32,6 +33,7 @@ def get_dados_internos():
     # primeiro_dia_mes_passado = ultimo_dia_mes_passado.replace(day=1)
     url_get_licitacoes = 'https://transparencia.e-publica.net/epublica-portal/rest/florianopolis/compras/licitacao/listAll?ano=2025&entidade=2002'
     url_licitacao_individual = 'https://transparencia.e-publica.net/epublica-portal/rest/florianopolis/compras/licitacao/form?ano=2025&entidade=2002'
+    
     registros = []
     headers = {
         'Content-Type': 'application/json',
@@ -46,8 +48,12 @@ def get_dados_internos():
         payload_data = json.load(f)
         # payload_data['searchBean']['searchProperties']['Filtrar porlicitacao.dataEmissao']['valueCompare'] = ultimo_dia_mes_passado.strftime("%Y-%m-%d")
         # payload_data['searchBean']['searchProperties']['Filtrar porlicitacao.dataEmissao']['value'] = primeiro_dia_mes_passado.strftime("%Y-%m-%d")
-        payload_data['searchBean']['searchProperties']['Filtrar porlicitacao.dataEmissao']['valueCompare'] = hoje.strftime("%Y-%m-%d")
-        payload_data['searchBean']['searchProperties']['Filtrar porlicitacao.dataEmissao']['value'] = hoje.strftime("%Y-%m-%d")
+        if is_licitacao:
+            payload_data['searchBean']['searchProperties']['Filtrar porlicitacao.dataEmissao']['valueCompare'] = hoje.strftime("%Y-%m-%d")
+            payload_data['searchBean']['searchProperties']['Filtrar porlicitacao.dataEmissao']['value'] = hoje.strftime("%Y-%m-%d")
+        else:
+            payload_data['searchBean']['searchProperties']['Filtrar porcontrato.assinatura']['valueCompare'] = hoje.strftime("%Y-%m-%d")
+            payload_data['searchBean']['searchProperties']['Filtrar porcontrato.assinatura']['value'] = hoje.strftime("%Y-%m-%d")
         payload_data['pagination']['count'] = 1000
 
     dados2 = requests.post(url_get_licitacoes, json=payload_data)
@@ -71,7 +77,6 @@ def get_dados_internos():
                 retry = False
                 registro = response.json()['pojo']
                 registros.append(registro)
-                print(id_licitacao)
     return registros
 
 with DAG(
@@ -91,9 +96,9 @@ with DAG(
         conn_id='postgres_localhost',
         sql='/sql/inserir_unidades_gestoras.sql'
     )
-    dados_api = get_dados_api()
-    dados_internos = get_dados_internos()
-    print(dados_api)
-    print(dados_internos)
+    dados_api_licitacoes = get_dados_api()
+    dados_internos_licitacoes = get_dados_internos()
+    print(dados_api_licitacoes)
+    print(dados_internos_licitacoes)
 
-    task_criar_tabelas >> task_inserir_unidades_gestoras >> [dados_api, dados_internos]
+    task_criar_tabelas >> task_inserir_unidades_gestoras >> [dados_api_licitacoes, dados_internos_licitacoes]
