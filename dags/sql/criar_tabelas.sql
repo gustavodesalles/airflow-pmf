@@ -2,17 +2,17 @@
 
 CREATE TABLE IF NOT EXISTS Advogado (
     id_advogado SERIAL PRIMARY KEY,
-    nome VARCHAR
+    nome VARCHAR UNIQUE
 );
 
 CREATE TABLE IF NOT EXISTS Fornecedor (
     id_fornecedor SERIAL PRIMARY KEY,
-    nome VARCHAR
+    nome VARCHAR UNIQUE
 );
 
 CREATE TABLE IF NOT EXISTS Unidade_Gestora (
     codigo_unidade_gestora INTEGER PRIMARY KEY UNIQUE,
-    denominacao VARCHAR
+    denominacao VARCHAR UNIQUE
 );
 
 CREATE TABLE IF NOT EXISTS Licitacao (
@@ -32,7 +32,7 @@ CREATE TABLE IF NOT EXISTS Licitacao (
 CREATE TABLE IF NOT EXISTS Contrato (
     id_contrato SERIAL PRIMARY KEY,
     numero_contrato VARCHAR,
-    assinatura INTEGER,
+    assinatura DATE,
     inicio_vigencia DATE,
     vencimento DATE,
     valor_total DECIMAL,
@@ -42,7 +42,8 @@ CREATE TABLE IF NOT EXISTS Contrato (
     id_licitacao INTEGER,
     FOREIGN KEY (codigo_unidade_gestora) REFERENCES Unidade_Gestora (codigo_unidade_gestora),
     FOREIGN KEY (id_fornecedor) REFERENCES Fornecedor (id_fornecedor),
-    FOREIGN KEY (id_licitacao) REFERENCES Licitacao (id_licitacao)
+    FOREIGN KEY (id_licitacao) REFERENCES Licitacao (id_licitacao),
+    CONSTRAINT unique_numero_contrato_codigo_unidade_gestora UNIQUE (numero_contrato, codigo_unidade_gestora)
 );
 
 CREATE TABLE IF NOT EXISTS Empenho (
@@ -71,7 +72,9 @@ CREATE TABLE IF NOT EXISTS Item (
     id_contrato INTEGER,
     valor_total DECIMAL,
     FOREIGN KEY (id_licitacao) REFERENCES Licitacao (id_licitacao),
-    FOREIGN KEY (id_contrato) REFERENCES Contrato (id_contrato)
+    FOREIGN KEY (id_contrato) REFERENCES Contrato (id_contrato),
+    CONSTRAINT unique_numero_item_id_licitacao UNIQUE (numero_item, id_licitacao),
+    CONSTRAINT unique_numero_item_id_contrato UNIQUE (numero_item, id_contrato)
 );
 
 CREATE TABLE IF NOT EXISTS Vencedor (
@@ -82,7 +85,8 @@ CREATE TABLE IF NOT EXISTS Vencedor (
     situacao VARCHAR,
     PRIMARY KEY (id_item, id_fornecedor),
     FOREIGN KEY (id_item) REFERENCES Item (id_item),
-    FOREIGN KEY (id_fornecedor) REFERENCES Fornecedor (id_fornecedor)
+    FOREIGN KEY (id_fornecedor) REFERENCES Fornecedor (id_fornecedor),
+    CONSTRAINT unique_id_item_id_fornecedor UNIQUE (id_item, id_fornecedor)
 );
 
 CREATE TABLE IF NOT EXISTS Texto (
@@ -92,12 +96,15 @@ CREATE TABLE IF NOT EXISTS Texto (
     denominacao VARCHAR,
     link VARCHAR,
     FOREIGN KEY (id_licitacao) REFERENCES Licitacao (id_licitacao),
-    FOREIGN KEY (id_contrato) REFERENCES Contrato (id_contrato)
+    FOREIGN KEY (id_contrato) REFERENCES Contrato (id_contrato),
+    CONSTRAINT unique_id_licitacao_denominacao UNIQUE (id_licitacao, denominacao),
+    CONSTRAINT unique_id_contrato_denominacao UNIQUE (id_contrato, denominacao)
 );
 
 CREATE TABLE IF NOT EXISTS Licitacao_Unidade_Gestora (
     id_licitacao INTEGER,
     codigo_unidade_gestora INTEGER,
     FOREIGN KEY (id_licitacao) REFERENCES Licitacao (id_licitacao),
-    FOREIGN KEY (codigo_unidade_gestora) REFERENCES Unidade_Gestora (codigo_unidade_gestora)
+    FOREIGN KEY (codigo_unidade_gestora) REFERENCES Unidade_Gestora (codigo_unidade_gestora),
+    CONSTRAINT unique_id_licitacao_codigo_unidade_gestora UNIQUE (id_licitacao, codigo_unidade_gestora)
 );

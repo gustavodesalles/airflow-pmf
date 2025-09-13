@@ -80,49 +80,190 @@ def get_dados_internos(is_licitacao=True):
     return registros
 
 def juntar_dados_contrato():
-    dados_api = get_dados_api(False)
-    dados_internos = get_dados_internos(False)
-
-    for registro in dados_api:
-        contrato = registro['registro']['contrato']
-        contrato_interno = next((item for item in dados_internos if item['numero'] == contrato['numero']), None)
-
-        numero = contrato.get('numero', None)
-        assinatura = contrato.get('assinatura', None)
-        inicio_vigencia = contrato.get('inicioVigencia', None)
-        vencimento = contrato.get('vencimento', None)
-        valor_total = contrato.get('valorTotal', None)
-        objeto_resumido = contrato.get('objetoResumido', None)
-
-        if contrato_interno:
-            nome_fornecedor = contrato_interno.get('fornecedorNome', None)
-            #inserir fornecedor
-
-            #encontrar licitação vinculada e pegar id
+    try:
+        # Establish a connection to the PostgreSQL database
+        conn = psycopg2.connect(
+            host="localhost",
+            database="test",
+            user="airflow",
+            password="airflow",
+            port="5432"
+        )
+        print("Conexão bem-sucedida ao banco de dados PostgreSQL")
         
-            for item in contrato_interno['itens']:
-                # localizar item e verificar se existe na tabela 'item'
-                # se existir, apenas dar update com valor total 
-                numero_item = item.get('numero', None)
-                denominacao_item = item.get('denominacao', None)
-                quantidade_item = item.get('quantidade', None)
-                unidade_medida_item = item.get('unidadeMedida', None)
-                valor_unitario_item = item.get('valorUnitarioEstimado', None)
-                # inserir itens
-            
-            for texto in contrato_interno['textos']:
-                denominacao_texto = texto.get('tipo', None)
-                url_texto = "https://transparencia.e-publica.net/epublica-portal/rest/florianopolis/contrato/texto/download/public?ano=2025&entidade=2002"
-                requisicao = requests.post(url_texto, json=texto)
-                if requisicao.status_code == 200:
-                    link_texto = requisicao.json()['id']
-                else:
-                    link_texto = None
-                # inserir textos
-            
-            for empenho in contrato_interno['empenhos']:
-                # inserir empenho
-                pass
+        cursor = conn.cursor()
+
+        # Fetch data from APIs
+        dados_api = get_dados_api(False)
+        dados_internos = get_dados_internos(False)
+
+        for registro in dados_api:
+            contrato = registro['registro']['contrato']
+            contrato_interno = next((item for item in dados_internos if item['numero'] == contrato['numero']), None)
+
+            numero = contrato.get('numero', None)
+            assinatura = contrato.get('assinatura', None)
+            inicio_vigencia = contrato.get('inicioVigencia', None)
+            vencimento = contrato.get('vencimento', None)
+            valor_total = contrato.get('valorTotal', None)
+            objeto_resumido = contrato.get('objetoResumido', None)
+
+            if contrato_interno:
+                nome_fornecedor = contrato_interno.get('fornecedorNome', None)
+                # Insert or update fornecedor
+                cursor.execute(
+                    """
+                    INSERT INTO Fornecedor (nome)
+                    VALUES (%s)
+                    ON CONFLICT (nome) DO UPDATE
+                    SET nome = EXCLUDED.nome
+                    RETURNING id_fornecedor;
+                    """,
+                    (nome_fornecedor,)
+                )
+                id_fornecedor = cursor.fetchone()[0]
+
+                numero_licitacao = contrato_interno.get('licitacao', None)
+                id_licitacao = None
+                cursor.execute(
+                    "SELECT id_licitacao FROM Licitacao WHERE numero_licitacao = %s;",
+                    (numero_licitacao,)
+                )
+                result = cursor.fetchone()
+                if result:
+                    id_licitacao = result[0]
+
+                codigo_unidade_gestora = None
+                nome_unidade_gestora = contrato_interno.get('unidadeGestora', None)
+                if nome_unidade_gestora:
+                    nome_unidade_gestora = nome_unidade_gestora.rstrip()
+                    cursor.execute(
+                        "SELECT codigo_unidade_gestora FROM Unidade_Gestora WHERE denominacao ILIKE %s LIMIT 1;",
+                        (nome_unidade_gestora,)
+                    )
+                    codigo_unidade_gestora = cursor.fetchone()[0]
+
+                # Insert or update contrato
+                cursor.execute(
+                    """
+                    INSERT INTO Contrato (
+                        numero_contrato, assinatura, inicio_vigencia, vencimento,
+                        valor_total, objeto_resumido, codigo_unidade_gestora, id_fornecedor, id_licitacao
+                    ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)
+                    ON CONFLICT (numero_contrato, codigo_unidade_gestora) DO UPDATE
+                    SET 
+                        assinatura = EXCLUDED.assinatura,
+                        inicio_vigencia = EXCLUDED.inicio_vigencia,
+                        vencimento = EXCLUDED.vencimento,
+                        valor_total = EXCLUDED.valor_total,
+                        objeto_resumido = EXCLUDED.objeto_resumido,
+                        codigo_unidade_gestora = EXCLUDED.codigo_unidade_gestora,
+                        id_fornecedor = EXCLUDED.id_fornecedor,
+                        id_licitacao = EXCLUDED.id_licitacao
+                    RETURNING id_contrato;
+                    """,
+                    (numero, assinatura, inicio_vigencia, vencimento, valor_total, objeto_resumido, codigo_unidade_gestora, id_fornecedor, id_licitacao)
+                )
+                id_contrato = cursor.fetchone()[0]
+
+                # Process items
+                for item in contrato_interno['itens']:
+                    numero_item = item.get('numero', None)
+                    denominacao_item = item.get('denominacao', None)
+                    quantidade_item = item.get('quantidade', None)
+                    unidade_medida_item = item.get('unidadeMedida', None)
+                    valor_unitario_item = item.get('valorUnitarioEstimado', None)
+                    valor_total_item = item.get('valorTotal', None)
+
+                    cursor.execute(
+                        """
+                        INSERT INTO Item (
+                            numero_item, denominacao, quantidade, unidade_medida,
+                            valor_unitario_estimado, valor_total, id_contrato
+                        ) VALUES (%s, %s, %s, %s, %s, %s, %s)
+                        ON CONFLICT (numero_item, id_contrato) DO UPDATE
+                        SET 
+                            denominacao = EXCLUDED.denominacao,
+                            quantidade = EXCLUDED.quantidade,
+                            unidade_medida = EXCLUDED.unidade_medida,
+                            valor_unitario_estimado = EXCLUDED.valor_unitario_estimado,
+                            valor_total = EXCLUDED.valor_total
+                        RETURNING id_item;
+                        """,
+                        (numero_item, denominacao_item, quantidade_item, unidade_medida_item, valor_unitario_item, valor_total_item, id_contrato)
+                    )
+                    id_item = cursor.fetchone()[0]
+
+                # Process textos
+                for texto in contrato_interno['textos']:
+                    denominacao_texto = texto.get('tipo', None)
+                    url_texto = "https://transparencia.e-publica.net/epublica-portal/rest/florianopolis/contrato/texto/download/public?ano=2025&entidade=2002"
+                    requisicao = requests.post(url_texto, json=texto)
+                    if requisicao.status_code == 200:
+                        link_texto = requisicao.json()['id']
+                    else:
+                        link_texto = None
+
+                    cursor.execute(
+                        """
+                        INSERT INTO Texto (
+                            id_contrato, denominacao, link
+                        ) VALUES (%s, %s, %s)
+                        ON CONFLICT (id_contrato, denominacao) DO UPDATE
+                        SET 
+                            link = EXCLUDED.link
+                        RETURNING id_texto;
+                        """,
+                        (id_contrato, denominacao_texto, link_texto)
+                    )
+                    id_texto = cursor.fetchone()[0]
+
+                # Process empenhos
+                for empenho in contrato_interno['empenhos']:
+                    numero_empenho = empenho.get('numero', None)
+                    valor_empenho = empenho.get('valorEmpenhado', None)
+                    valor_pago = empenho.get('valorPago', None)
+                    emissao_empenho = empenho.get('emissao', None)
+
+                    cursor.execute(
+                        "SELECT id_empenho FROM Empenho WHERE numero_empenho = %s AND id_contrato = %s;",
+                        (numero_empenho, id_contrato)
+                    )
+                    result = cursor.fetchone()
+                    if result:
+                        id_empenho = result[0]
+                        cursor.execute(
+                            """
+                            UPDATE Empenho
+                            SET 
+                                emissao = %s
+                            WHERE id_empenho = %s;
+                            """,
+                            (emissao_empenho, id_empenho)
+                        )
+                    else:
+                        cursor.execute(
+                            """
+                            INSERT INTO Empenho (
+                                id_contrato, numero_empenho, emissao
+                            ) VALUES (%s, %s, %s)
+                            RETURNING id_empenho;
+                            """,
+                            (id_contrato, numero_empenho, emissao_empenho)
+                        )
+                        id_empenho = cursor.fetchone()[0]
+
+        conn.commit()  # Commit the transaction
+
+    except Exception as e:
+        print(f"Erro ao processar os dados: {e}")
+        if conn:
+            conn.rollback()  # Rollback the transaction in case of error
+    finally:
+        if cursor:
+            cursor.close()
+        if conn:
+            conn.close()
 
 def juntar_dados_licitacao():
     dados_api = get_dados_api()
@@ -155,7 +296,13 @@ def juntar_dados_licitacao():
 
             nome_advogado = registro['registro']['advogado'].get('nome', None)
             cursor.execute(
-                "INSERT INTO Advogado (nome) VALUES (%s) RETURNING id_advogado;",
+                """
+                INSERT INTO Advogado (nome)
+                VALUES (%s)
+                ON CONFLICT (nome) DO UPDATE
+                SET nome = EXCLUDED.nome
+                RETURNING id_advogado;
+                """,
                 (nome_advogado,)
             )
             id_advogado = cursor.fetchone()[0]
@@ -166,6 +313,16 @@ def juntar_dados_licitacao():
                     numero_licitacao, modalidade, valor_estimado, objeto_resumido,
                     data_emissao, data_abertura, finalidade, forma_julgamento, id_advogado
                 ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)
+                ON CONFLICT (numero_licitacao) DO UPDATE
+                SET 
+                    modalidade = EXCLUDED.modalidade,
+                    valor_estimado = EXCLUDED.valor_estimado,
+                    objeto_resumido = EXCLUDED.objeto_resumido,
+                    data_emissao = EXCLUDED.data_emissao,
+                    data_abertura = EXCLUDED.data_abertura,
+                    finalidade = EXCLUDED.finalidade,
+                    forma_julgamento = EXCLUDED.forma_julgamento,
+                    id_advogado = EXCLUDED.id_advogado
                 RETURNING id_licitacao;
                 """,
                 (
@@ -181,7 +338,8 @@ def juntar_dados_licitacao():
                 """
                 INSERT INTO Licitacao_Unidade_Gestora (
                     id_licitacao, codigo_unidade_gestora
-                ) VALUES (%s, %s);
+                ) VALUES (%s, %s)
+                ON CONFLICT DO NOTHING;
                 """,
                 (id_licitacao, codigo_ug)
             )
@@ -199,11 +357,20 @@ def juntar_dados_licitacao():
                     numero_item, denominacao, quantidade, unidade_medida,
                     valor_unitario_estimado, situacao, id_licitacao, valor_total
                 ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
+                ON CONFLICT (numero_item, id_licitacao) DO UPDATE
+                SET 
+                    denominacao = EXCLUDED.denominacao,
+                    quantidade = EXCLUDED.quantidade,
+                    unidade_medida = EXCLUDED.unidade_medida,
+                    valor_unitario_estimado = EXCLUDED.valor_unitario_estimado,
+                    situacao = EXCLUDED.situacao,
+                    valor_total = EXCLUDED.valor_total
                 RETURNING id_item;
                 """,
                 (
                     numero_item, denominacao_item, quantidade_item, unidade_medida_item,
-                    valor_unitario_item, situacao_item, id_licitacao, (quantidade_item * valor_unitario_item if quantidade_item and valor_unitario_item else None)
+                    valor_unitario_item, situacao_item, id_licitacao, 
+                    (quantidade_item * valor_unitario_item if quantidade_item and valor_unitario_item else None)
                 )
             )
             id_item = cursor.fetchone()[0]
@@ -225,7 +392,13 @@ def juntar_dados_licitacao():
                 else:
                     # Fornecedor não existe, então inserir novo registro
                     cursor.execute(
-                        "INSERT INTO Fornecedor (nome) VALUES (%s) RETURNING id_fornecedor;",
+                        """
+                        INSERT INTO Fornecedor (nome) 
+                        VALUES (%s) 
+                        ON CONFLICT (nome) DO UPDATE
+                        SET nome = EXCLUDED.nome
+                        RETURNING id_fornecedor;
+                        """,
                         (nome_fornecedor,)
                     )
                     id_fornecedor = cursor.fetchone()[0]  # obter ID
@@ -235,7 +408,12 @@ def juntar_dados_licitacao():
                     """
                     INSERT INTO Vencedor (
                         id_item, id_fornecedor, quantidade, valor_unitario, situacao
-                    ) VALUES (%s, %s, %s, %s, %s);
+                    ) VALUES (%s, %s, %s, %s, %s)
+                    ON CONFLICT (id_item, id_fornecedor) DO UPDATE
+                    SET 
+                        quantidade = EXCLUDED.quantidade,
+                        valor_unitario = EXCLUDED.valor_unitario,
+                        situacao = EXCLUDED.situacao;
                     """,
                     (id_item, id_fornecedor, quantidade_vencedor, valor_unitario_vencedor, situacao_vencedor)
                 )
@@ -259,6 +437,9 @@ def juntar_dados_licitacao():
                     INSERT INTO Texto (
                         id_licitacao, denominacao, link
                     ) VALUES (%s, %s, %s)
+                    ON CONFLICT (id_licitacao, denominacao) DO UPDATE
+                    SET 
+                        link = EXCLUDED.link
                     RETURNING id_texto;
                     """,
                     (id_licitacao, denominacao_texto, link_texto)
@@ -275,14 +456,32 @@ def juntar_dados_licitacao():
                 valor_empenho = empenho.get('valorEmpenhado', None)
                 valor_pago = empenho.get('valorPago', None)
                 emissao_empenho = empenho.get('emissao', None)
+
                 cursor.execute(
-                    """
-                    INSERT INTO Empenho (
-                        id_licitacao, numero_empenho, emissao_empenho
-                    ) VALUES (%s, %s, %s);
-                    """,
-                    (id_licitacao, numero_empenho, emissao_empenho)
+                    "SELECT id_empenho FROM Empenho WHERE numero_empenho = %s AND id_licitacao = %s;",
+                    (numero_empenho, id_licitacao)
                 )
+                result = cursor.fetchone()
+                if result:
+                    id_empenho = result[0]
+                    cursor.execute(
+                        """
+                        UPDATE Empenho
+                        SET 
+                            emissao = %s
+                        WHERE id_empenho = %s;
+                        """,
+                        (emissao_empenho, id_empenho)
+                    )
+                else:
+                    cursor.execute(
+                        """
+                        INSERT INTO Empenho (
+                            id_licitacao, numero_empenho, emissao
+                        ) VALUES (%s, %s, %s);
+                        """,
+                        (id_licitacao, numero_empenho, emissao_empenho)
+                    )
 
         conn.commit()  # Commit the transaction
 
@@ -298,6 +497,6 @@ def juntar_dados_licitacao():
 
 # get_dados_api()
 
-get_dados_internos()
-# juntar_dados_licitacao()
-# juntar_dados_contrato()
+# get_dados_internos(False)
+juntar_dados_licitacao()
+juntar_dados_contrato()
