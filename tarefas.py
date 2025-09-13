@@ -294,7 +294,7 @@ def juntar_dados_licitacao():
             finalidade = licitacao.get('finalidade', None)
             forma_julgamento = licitacao.get('formaJulgamento', None)
 
-            nome_advogado = registro['registro']['advogado'].get('nome', None)
+            nome_advogado = registro['registro']['advogado']['pessoa'].get('nome', None)
             cursor.execute(
                 """
                 INSERT INTO Advogado (nome)
@@ -499,4 +499,4 @@ def juntar_dados_licitacao():
 
 # get_dados_internos(False)
 juntar_dados_licitacao()
-juntar_dados_contrato()
+# juntar_dados_contrato()
