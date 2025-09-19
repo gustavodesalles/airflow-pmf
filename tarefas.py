@@ -497,6 +497,7 @@ def juntar_dados_licitacao():
 
 # get_dados_api()
 
-# get_dados_internos(False)
-juntar_dados_licitacao()
+# get_dados_internos()
+get_dados_internos(False)
+# juntar_dados_licitacao()
 # juntar_dados_contrato()

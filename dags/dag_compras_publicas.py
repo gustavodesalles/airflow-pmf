@@ -181,7 +181,7 @@ def juntar_dados_licitacao(dados_api, dados_internos):
 
                 cursor.execute(
                     """
-                    INSERT INTO Item (
+                    INSERT INTO Item_Licitacao (
                         numero_item, denominacao, quantidade, unidade_medida,
                         valor_unitario_estimado, situacao, id_licitacao, valor_total
                     ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
@@ -193,7 +193,7 @@ def juntar_dados_licitacao(dados_api, dados_internos):
                         valor_unitario_estimado = EXCLUDED.valor_unitario_estimado,
                         situacao = EXCLUDED.situacao,
                         valor_total = EXCLUDED.valor_total
-                    RETURNING id_item;
+                    RETURNING id_item_licitacao;
                     """,
                     (
                         numero_item, denominacao_item, quantidade_item, unidade_medida_item,
@@ -201,49 +201,49 @@ def juntar_dados_licitacao(dados_api, dados_internos):
                         (quantidade_item * valor_unitario_item if quantidade_item and valor_unitario_item else None)
                     )
                 )
-                id_item = cursor.fetchone()[0]
+                id_item_licitacao = cursor.fetchone()[0]
 
                 # Vencedores
-                for vencedor in item['listVencedores']:
-                    nome_fornecedor = vencedor.get('fornecedor')
-                    quantidade_vencedor = vencedor.get('quantidade')
-                    valor_unitario_vencedor = vencedor.get('valorUnitario')
-                    situacao_vencedor = vencedor.get('situacao')
-
-                    cursor.execute(
-                        "SELECT id_fornecedor FROM Fornecedor WHERE nome = %s;",
-                        (nome_fornecedor,)
-                    )
-                    result = cursor.fetchone()
-
-                    if result:
-                        id_fornecedor = result[0]
-                    else:
-                        cursor.execute(
-                            """
-                            INSERT INTO Fornecedor (nome) 
-                            VALUES (%s) 
-                            ON CONFLICT (nome) DO UPDATE
-                            SET nome = EXCLUDED.nome
-                            RETURNING id_fornecedor;
-                            """,
-                            (nome_fornecedor,)
-                        )
-                        id_fornecedor = cursor.fetchone()[0]
-
-                    cursor.execute(
-                        """
-                        INSERT INTO Vencedor (
-                            id_item, id_fornecedor, quantidade, valor_unitario, situacao
-                        ) VALUES (%s, %s, %s, %s, %s)
-                        ON CONFLICT (id_item, id_fornecedor) DO UPDATE
-                        SET 
-                            quantidade = EXCLUDED.quantidade,
-                            valor_unitario = EXCLUDED.valor_unitario,
-                            situacao = EXCLUDED.situacao;
-                        """,
-                        (id_item, id_fornecedor, quantidade_vencedor, valor_unitario_vencedor, situacao_vencedor)
-                    )
+                # for vencedor in item['listVencedores']:
+                #     nome_fornecedor = vencedor.get('fornecedor')
+                #     quantidade_vencedor = vencedor.get('quantidade')
+                #     valor_unitario_vencedor = vencedor.get('valorUnitario')
+                #     situacao_vencedor = vencedor.get('situacao')
+                #
+                #     cursor.execute(
+                #         "SELECT id_fornecedor FROM Fornecedor WHERE nome = %s;",
+                #         (nome_fornecedor,)
+                #     )
+                #     result = cursor.fetchone()
+                #
+                #     if result:
+                #         id_fornecedor = result[0]
+                #     else:
+                #         cursor.execute(
+                #             """
+                #             INSERT INTO Fornecedor (nome)
+                #             VALUES (%s)
+                #             ON CONFLICT (nome) DO UPDATE
+                #             SET nome = EXCLUDED.nome
+                #             RETURNING id_fornecedor;
+                #             """,
+                #             (nome_fornecedor,)
+                #         )
+                #         id_fornecedor = cursor.fetchone()[0]
+                #
+                #     cursor.execute(
+                #         """
+                #         INSERT INTO Vencedor (
+                #             id_item, id_fornecedor, quantidade, valor_unitario, situacao
+                #         ) VALUES (%s, %s, %s, %s, %s)
+                #         ON CONFLICT (id_item, id_fornecedor) DO UPDATE
+                #         SET
+                #             quantidade = EXCLUDED.quantidade,
+                #             valor_unitario = EXCLUDED.valor_unitario,
+                #             situacao = EXCLUDED.situacao;
+                #         """,
+                #         (id_item, id_fornecedor, quantidade_vencedor, valor_unitario_vencedor, situacao_vencedor)
+                #     )
 
             # Textos
             for texto in registro['registro']['listTextos']:
@@ -272,7 +272,6 @@ def juntar_dados_licitacao(dados_api, dados_internos):
                     """,
                     (id_licitacao, denominacao_texto, link_texto)
                 )
-                cursor.fetchone()[0]
 
             # Empenhos
             for empenho in licitacao_interno.get('empenhos', []):
@@ -417,32 +416,29 @@ def juntar_dados_contrato(dados_api, dados_internos):
 
                     cursor.execute(
                         """
-                        INSERT INTO Item (
+                        INSERT INTO Item_Contrato (
                             numero_item, denominacao, quantidade, unidade_medida,
-                            valor_unitario_estimado, valor_total, id_contrato, id_licitacao
-                        ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
+                            valor_unitario, valor_total, id_contrato
+                        ) VALUES (%s, %s, %s, %s, %s, %s, %s)
                         ON CONFLICT (numero_item, id_contrato) DO UPDATE
                         SET 
                             denominacao = EXCLUDED.denominacao,
                             quantidade = EXCLUDED.quantidade,
                             unidade_medida = EXCLUDED.unidade_medida,
                             valor_unitario_estimado = EXCLUDED.valor_unitario_estimado,
-                            valor_total = EXCLUDED.valor_total,
-                            id_licitacao = EXCLUDED.id_licitacao
-                        RETURNING id_item;
+                            valor_total = EXCLUDED.valor_total;
                         """,
                         (
                             numero_item, denominacao_item, quantidade_item, unidade_medida_item,
-                            valor_unitario_item, valor_total_item, id_contrato, id_licitacao
+                            valor_unitario_item, valor_total_item, id_contrato
                         )
                     )
-                    cursor.fetchone()[0]
                 
                 cursor.execute(
                     """
                     UPDATE Contrato
                     SET valor_total = (
-                        SELECT SUM(valor_total) FROM Item WHERE item.id_contrato = contrato.id_contrato
+                        SELECT SUM(valor_total) FROM Item_Contrato WHERE item_contrato.id_contrato = contrato.id_contrato
                     )
                     WHERE id_contrato = %s;
                     """,
@@ -468,7 +464,6 @@ def juntar_dados_contrato(dados_api, dados_internos):
                         """,
                         (id_contrato, denominacao_texto, link_texto)
                     )
-                    cursor.fetchone()[0]
 
                 # Empenhos
                 for empenho in contrato_interno.get('empenhos', []):
@@ -501,7 +496,6 @@ def juntar_dados_contrato(dados_api, dados_internos):
                             """,
                             (id_contrato, numero_empenho, emissao_empenho)
                         )
-                        cursor.fetchone()[0]
 
         conn.commit()
 

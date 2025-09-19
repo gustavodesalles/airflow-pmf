@@ -60,8 +60,8 @@ CREATE TABLE IF NOT EXISTS Empenho (
     FOREIGN KEY (id_licitacao) REFERENCES Licitacao (id_licitacao)
 );
 
-CREATE TABLE IF NOT EXISTS Item (
-    id_item SERIAL PRIMARY KEY,
+CREATE TABLE IF NOT EXISTS Item_Licitacao (
+    id_item_licitacao SERIAL PRIMARY KEY,
     numero_item VARCHAR,
     denominacao VARCHAR,
     quantidade DECIMAL,
@@ -69,24 +69,23 @@ CREATE TABLE IF NOT EXISTS Item (
     valor_unitario_estimado DECIMAL,
     situacao VARCHAR,
     id_licitacao INTEGER,
-    id_contrato INTEGER,
     valor_total DECIMAL,
     FOREIGN KEY (id_licitacao) REFERENCES Licitacao (id_licitacao),
-    FOREIGN KEY (id_contrato) REFERENCES Contrato (id_contrato),
-    CONSTRAINT unique_numero_item_id_licitacao UNIQUE (numero_item, id_licitacao),
-    CONSTRAINT unique_numero_item_id_contrato UNIQUE (numero_item, id_contrato)
+    CONSTRAINT unique_numero_item_id_licitacao UNIQUE (numero_item, id_licitacao)
 );
 
-CREATE TABLE IF NOT EXISTS Vencedor (
-    id_item INTEGER,
-    id_fornecedor INTEGER,
+CREATE TABLE IF NOT EXISTS Item_Contrato (
+    id_item_contrato SERIAL PRIMARY KEY,
+    numero_item VARCHAR,
+    denominacao VARCHAR,
     quantidade DECIMAL,
+    unidade_medida VARCHAR,
     valor_unitario DECIMAL,
     situacao VARCHAR,
-    PRIMARY KEY (id_item, id_fornecedor),
-    FOREIGN KEY (id_item) REFERENCES Item (id_item),
-    FOREIGN KEY (id_fornecedor) REFERENCES Fornecedor (id_fornecedor),
-    CONSTRAINT unique_id_item_id_fornecedor UNIQUE (id_item, id_fornecedor)
+    id_contrato INTEGER,
+    valor_total DECIMAL,
+    FOREIGN KEY (id_contrato) REFERENCES Contrato (id_contrato),
+    CONSTRAINT unique_id_item_id_fornecedor UNIQUE (numero_item, id_fornecedor)
 );
 
 CREATE TABLE IF NOT EXISTS Texto (
