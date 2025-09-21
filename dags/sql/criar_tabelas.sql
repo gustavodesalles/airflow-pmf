@@ -85,7 +85,7 @@ CREATE TABLE IF NOT EXISTS Item_Contrato (
     id_contrato INTEGER,
     valor_total DECIMAL,
     FOREIGN KEY (id_contrato) REFERENCES Contrato (id_contrato),
-    CONSTRAINT unique_id_item_id_fornecedor UNIQUE (numero_item, id_fornecedor)
+    CONSTRAINT unique_numero_item_id_contrato UNIQUE (numero_item, id_contrato)
 );
 
 CREATE TABLE IF NOT EXISTS Texto (

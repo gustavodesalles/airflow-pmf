@@ -15,12 +15,13 @@ default_args = {
 def get_dados_api(is_licitacao=True):
     # hoje = datetime.today()
     hoje = datetime(2025, 9, 1)
+    ultimo_dia = datetime(2025, 9, 8)
     # primeiro_dia_mes_atual = hoje.replace(day=1)
     # ultimo_dia_mes_passado = primeiro_dia_mes_atual - timedelta(days=1)
     # primeiro_dia_mes_passado = ultimo_dia_mes_passado.replace(day=1)
     # url_licitacoes = f'https://transparencia.e-publica.net:443/epublica-portal/rest/florianopolis/api/v1/licitacao?periodo_inicial={primeiro_dia_mes_passado.strftime("%d/%m/%Y")}&periodo_final={ultimo_dia_mes_passado.strftime("%d/%m/%Y")}'
-    url_licitacoes = f'https://transparencia.e-publica.net:443/epublica-portal/rest/florianopolis/api/v1/licitacao?periodo_inicial={hoje.strftime("%d/%m/%Y")}&periodo_final={hoje.strftime("%d/%m/%Y")}'
-    url_contratos = f'https://transparencia.e-publica.net:443/epublica-portal/rest/florianopolis/api/v1/contrato?periodo_inicial={hoje.strftime("%d/%m/%Y")}&periodo_final={hoje.strftime("%d/%m/%Y")}'
+    url_licitacoes = f'https://transparencia.e-publica.net:443/epublica-portal/rest/florianopolis/api/v1/licitacao?periodo_inicial={hoje.strftime("%d/%m/%Y")}&periodo_final={ultimo_dia.strftime("%d/%m/%Y")}'
+    url_contratos = f'https://transparencia.e-publica.net:443/epublica-portal/rest/florianopolis/api/v1/contrato?periodo_inicial={hoje.strftime("%d/%m/%Y")}&periodo_final={ultimo_dia.strftime("%d/%m/%Y")}'
     response = requests.get(url_licitacoes) if is_licitacao else requests.get(url_contratos)
     dados = response.json()
     return dados['registros']
@@ -29,6 +30,7 @@ def get_dados_api(is_licitacao=True):
 def get_dados_internos(is_licitacao=True):
     # hoje = datetime.today()
     hoje = datetime(2025, 9, 1)
+    ultimo_dia = datetime(2025, 9, 8)
     # primeiro_dia_mes_atual = hoje.replace(day=1)
     # ultimo_dia_mes_passado = primeiro_dia_mes_atual - timedelta(days=1)
     # primeiro_dia_mes_passado = ultimo_dia_mes_passado.replace(day=1)
@@ -53,10 +55,10 @@ def get_dados_internos(is_licitacao=True):
         # payload_data['searchBean']['searchProperties']['Filtrar porlicitacao.dataEmissao']['valueCompare'] = ultimo_dia_mes_passado.strftime("%Y-%m-%d")
         # payload_data['searchBean']['searchProperties']['Filtrar porlicitacao.dataEmissao']['value'] = primeiro_dia_mes_passado.strftime("%Y-%m-%d")
         if is_licitacao:
-            payload_data['searchBean']['searchProperties']['Filtrar porlicitacao.dataEmissao']['valueCompare'] = hoje.strftime("%Y-%m-%d")
+            payload_data['searchBean']['searchProperties']['Filtrar porlicitacao.dataEmissao']['valueCompare'] = ultimo_dia.strftime("%Y-%m-%d")
             payload_data['searchBean']['searchProperties']['Filtrar porlicitacao.dataEmissao']['value'] = hoje.strftime("%Y-%m-%d")
         else:
-            payload_data['searchBean']['searchProperties']['Filtrar porcontrato.assinatura']['valueCompare'] = hoje.strftime("%Y-%m-%d")
+            payload_data['searchBean']['searchProperties']['Filtrar porcontrato.assinatura']['valueCompare'] = ultimo_dia.strftime("%Y-%m-%d")
             payload_data['searchBean']['searchProperties']['Filtrar porcontrato.assinatura']['value'] = hoje.strftime("%Y-%m-%d")
         payload_data['pagination']['count'] = 1000
 
@@ -274,35 +276,36 @@ def juntar_dados_licitacao(dados_api, dados_internos):
                 )
 
             # Empenhos
-            for empenho in licitacao_interno.get('empenhos', []):
-                numero_empenho = empenho.get('numero')
-                emissao_empenho = empenho.get('emissao')
+            if licitacao_interno and 'empenhos' in licitacao_interno:
+                for empenho in licitacao_interno.get('empenhos', []):
+                    numero_empenho = empenho.get('numero')
+                    emissao_empenho = empenho.get('emissao')
 
-                cursor.execute(
-                    "SELECT id_empenho FROM Empenho WHERE numero_empenho = %s AND id_licitacao = %s;",
-                    (numero_empenho, id_licitacao)
-                )
-                result = cursor.fetchone()
+                    cursor.execute(
+                        "SELECT id_empenho FROM Empenho WHERE numero_empenho = %s AND id_licitacao = %s;",
+                        (numero_empenho, id_licitacao)
+                    )
+                    result = cursor.fetchone()
 
-                if result:
-                    id_empenho = result[0]
-                    cursor.execute(
-                        """
-                        UPDATE Empenho
-                        SET emissao = %s
-                        WHERE id_empenho = %s;
-                        """,
-                        (emissao_empenho, id_empenho)
-                    )
-                else:
-                    cursor.execute(
-                        """
-                        INSERT INTO Empenho (
-                            id_licitacao, numero_empenho, emissao
-                        ) VALUES (%s, %s, %s);
-                        """,
-                        (id_licitacao, numero_empenho, emissao_empenho)
-                    )
+                    if result:
+                        id_empenho = result[0]
+                        cursor.execute(
+                            """
+                            UPDATE Empenho
+                            SET emissao = %s
+                            WHERE id_empenho = %s;
+                            """,
+                            (emissao_empenho, id_empenho)
+                        )
+                    else:
+                        cursor.execute(
+                            """
+                            INSERT INTO Empenho (
+                                id_licitacao, numero_empenho, emissao
+                            ) VALUES (%s, %s, %s);
+                            """,
+                            (id_licitacao, numero_empenho, emissao_empenho)
+                        )
 
         conn.commit()
 
@@ -425,7 +428,7 @@ def juntar_dados_contrato(dados_api, dados_internos):
                             denominacao = EXCLUDED.denominacao,
                             quantidade = EXCLUDED.quantidade,
                             unidade_medida = EXCLUDED.unidade_medida,
-                            valor_unitario_estimado = EXCLUDED.valor_unitario_estimado,
+                            valor_unitario = EXCLUDED.valor_unitario,
                             valor_total = EXCLUDED.valor_total;
                         """,
                         (
