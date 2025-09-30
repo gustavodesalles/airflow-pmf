@@ -51,6 +51,8 @@ CREATE TABLE IF NOT EXISTS Empenho (
     emissao DATE,
     numero_empenho INTEGER,
     objeto_resumido VARCHAR,
+    valor_empenhado DECIMAL,
+    valor_pago DECIMAL,
     especie VARCHAR,
     categoria VARCHAR,
     id_contrato INTEGER,

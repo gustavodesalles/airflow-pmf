@@ -205,48 +205,6 @@ def juntar_dados_licitacao(dados_api, dados_internos):
                 )
                 id_item_licitacao = cursor.fetchone()[0]
 
-                # Vencedores
-                # for vencedor in item['listVencedores']:
-                #     nome_fornecedor = vencedor.get('fornecedor')
-                #     quantidade_vencedor = vencedor.get('quantidade')
-                #     valor_unitario_vencedor = vencedor.get('valorUnitario')
-                #     situacao_vencedor = vencedor.get('situacao')
-                #
-                #     cursor.execute(
-                #         "SELECT id_fornecedor FROM Fornecedor WHERE nome = %s;",
-                #         (nome_fornecedor,)
-                #     )
-                #     result = cursor.fetchone()
-                #
-                #     if result:
-                #         id_fornecedor = result[0]
-                #     else:
-                #         cursor.execute(
-                #             """
-                #             INSERT INTO Fornecedor (nome)
-                #             VALUES (%s)
-                #             ON CONFLICT (nome) DO UPDATE
-                #             SET nome = EXCLUDED.nome
-                #             RETURNING id_fornecedor;
-                #             """,
-                #             (nome_fornecedor,)
-                #         )
-                #         id_fornecedor = cursor.fetchone()[0]
-                #
-                #     cursor.execute(
-                #         """
-                #         INSERT INTO Vencedor (
-                #             id_item, id_fornecedor, quantidade, valor_unitario, situacao
-                #         ) VALUES (%s, %s, %s, %s, %s)
-                #         ON CONFLICT (id_item, id_fornecedor) DO UPDATE
-                #         SET
-                #             quantidade = EXCLUDED.quantidade,
-                #             valor_unitario = EXCLUDED.valor_unitario,
-                #             situacao = EXCLUDED.situacao;
-                #         """,
-                #         (id_item, id_fornecedor, quantidade_vencedor, valor_unitario_vencedor, situacao_vencedor)
-                #     )
-
             # Textos
             for texto in registro['registro']['listTextos']:
                 denominacao_texto = texto.get('denominacao')
@@ -292,7 +250,9 @@ def juntar_dados_licitacao(dados_api, dados_internos):
                         cursor.execute(
                             """
                             UPDATE Empenho
-                            SET emissao = %s
+                            SET emissao = %s,
+                                valor_empenhado = %s,
+                                valor_pago = %s,
                             WHERE id_empenho = %s;
                             """,
                             (emissao_empenho, id_empenho)
@@ -301,8 +261,8 @@ def juntar_dados_licitacao(dados_api, dados_internos):
                         cursor.execute(
                             """
                             INSERT INTO Empenho (
-                                id_licitacao, numero_empenho, emissao
-                            ) VALUES (%s, %s, %s);
+                                id_licitacao, numero_empenho, valor_empenhado, valor_pago, emissao
+                            ) VALUES (%s, %s, %s, %s, %s);
                             """,
                             (id_licitacao, numero_empenho, emissao_empenho)
                         )
@@ -484,7 +444,9 @@ def juntar_dados_contrato(dados_api, dados_internos):
                         cursor.execute(
                             """
                             UPDATE Empenho
-                            SET emissao = %s
+                            SET emissao = %s,
+                                valor_empenhado = %s,
+                                valor_pago = %s,                            
                             WHERE id_empenho = %s;
                             """,
                             (emissao_empenho, id_empenho)
@@ -493,8 +455,8 @@ def juntar_dados_contrato(dados_api, dados_internos):
                         cursor.execute(
                             """
                             INSERT INTO Empenho (
-                                id_contrato, numero_empenho, emissao
-                            ) VALUES (%s, %s, %s)
+                                id_contrato, numero_empenho, valor_empenhado, valor_pago, emissao
+                            ) VALUES (%s, %s, %s, %s, %s)
                             RETURNING id_empenho;
                             """,
                             (id_contrato, numero_empenho, emissao_empenho)
