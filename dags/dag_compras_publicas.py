@@ -27,6 +27,14 @@ def get_dados_api(is_licitacao=True):
     return dados['registros']
 
 @task
+def get_dados_api_empenho():
+    hoje = datetime.today()
+    url_empenhos = f'https://transparencia.e-publica.net:443/epublica-portal/rest/florianopolis/api/v1/despesa?periodo_inicial={hoje.strftime("%m/%Y")}&periodo_final={"%m/%Y"}'
+    response = requests.get(url_empenhos)
+    dados = response.json()
+    return dados['registros']
+
+@task
 def get_dados_internos(is_licitacao=True):
     # hoje = datetime.today()
     hoje = datetime(2025, 9, 1)
@@ -237,6 +245,8 @@ def juntar_dados_licitacao(dados_api, dados_internos):
             if licitacao_interno and 'empenhos' in licitacao_interno:
                 for empenho in licitacao_interno.get('empenhos', []):
                     numero_empenho = empenho.get('numero')
+                    valor_empenhado = empenho.get('valorEmpenhado')
+                    valor_pago = empenho.get('valorPago')
                     emissao_empenho = empenho.get('emissao')
 
                     cursor.execute(
@@ -255,7 +265,7 @@ def juntar_dados_licitacao(dados_api, dados_internos):
                                 valor_pago = %s,
                             WHERE id_empenho = %s;
                             """,
-                            (emissao_empenho, id_empenho)
+                            (emissao_empenho, valor_empenhado, valor_pago, id_empenho)
                         )
                     else:
                         cursor.execute(
@@ -264,7 +274,7 @@ def juntar_dados_licitacao(dados_api, dados_internos):
                                 id_licitacao, numero_empenho, valor_empenhado, valor_pago, emissao
                             ) VALUES (%s, %s, %s, %s, %s);
                             """,
-                            (id_licitacao, numero_empenho, emissao_empenho)
+                            (id_licitacao, numero_empenho, valor_empenhado, valor_pago, emissao_empenho)
                         )
 
         conn.commit()
@@ -432,6 +442,8 @@ def juntar_dados_contrato(dados_api, dados_internos):
                 for empenho in contrato_interno.get('empenhos', []):
                     numero_empenho = empenho.get('numero')
                     emissao_empenho = empenho.get('emissao')
+                    valor_empenhado = empenho.get('valorEmpenhado')
+                    valor_pago = empenho.get('valorPago')
 
                     cursor.execute(
                         "SELECT id_empenho FROM Empenho WHERE numero_empenho = %s AND id_contrato = %s;",
@@ -449,7 +461,7 @@ def juntar_dados_contrato(dados_api, dados_internos):
                                 valor_pago = %s,                            
                             WHERE id_empenho = %s;
                             """,
-                            (emissao_empenho, id_empenho)
+                            (emissao_empenho, valor_empenhado, valor_pago, id_empenho)
                         )
                     else:
                         cursor.execute(
@@ -459,7 +471,7 @@ def juntar_dados_contrato(dados_api, dados_internos):
                             ) VALUES (%s, %s, %s, %s, %s)
                             RETURNING id_empenho;
                             """,
-                            (id_contrato, numero_empenho, emissao_empenho)
+                            (id_contrato, numero_empenho, valor_empenhado, valor_pago, emissao_empenho)
                         )
 
         conn.commit()
