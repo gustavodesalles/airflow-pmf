@@ -13,15 +13,15 @@ default_args = {
 
 @task
 def get_dados_api(is_licitacao=True):
-    # hoje = datetime.today()
-    hoje = datetime(2025, 9, 1)
-    ultimo_dia = datetime(2025, 9, 8)
+    ontem = datetime.today() - timedelta(days=1)
+    # hoje = datetime(2025, 9, 1)
+    # ultimo_dia = datetime(2025, 9, 8)
     # primeiro_dia_mes_atual = hoje.replace(day=1)
     # ultimo_dia_mes_passado = primeiro_dia_mes_atual - timedelta(days=1)
     # primeiro_dia_mes_passado = ultimo_dia_mes_passado.replace(day=1)
     # url_licitacoes = f'https://transparencia.e-publica.net:443/epublica-portal/rest/florianopolis/api/v1/licitacao?periodo_inicial={primeiro_dia_mes_passado.strftime("%d/%m/%Y")}&periodo_final={ultimo_dia_mes_passado.strftime("%d/%m/%Y")}'
-    url_licitacoes = f'https://transparencia.e-publica.net:443/epublica-portal/rest/florianopolis/api/v1/licitacao?periodo_inicial={hoje.strftime("%d/%m/%Y")}&periodo_final={ultimo_dia.strftime("%d/%m/%Y")}'
-    url_contratos = f'https://transparencia.e-publica.net:443/epublica-portal/rest/florianopolis/api/v1/contrato?periodo_inicial={hoje.strftime("%d/%m/%Y")}&periodo_final={ultimo_dia.strftime("%d/%m/%Y")}'
+    url_licitacoes = f'https://transparencia.e-publica.net:443/epublica-portal/rest/florianopolis/api/v1/licitacao?periodo_inicial={ontem.strftime("%d/%m/%Y")}&periodo_final={ontem.strftime("%d/%m/%Y")}'
+    url_contratos = f'https://transparencia.e-publica.net:443/epublica-portal/rest/florianopolis/api/v1/contrato?periodo_inicial={ontem.strftime("%d/%m/%Y")}&periodo_final={ontem.strftime("%d/%m/%Y")}'
     response = requests.get(url_licitacoes) if is_licitacao else requests.get(url_contratos)
     dados = response.json()
     return dados['registros']
