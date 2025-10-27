@@ -13,15 +13,15 @@ default_args = {
 
 @task
 def get_dados_api(is_licitacao=True):
-    ontem = datetime.today() - timedelta(days=1)
+    # dia_inicio = datetime.today() - timedelta(days=1)
+    # dia_termino = dia_inicio
     # hoje = datetime(2025, 9, 1)
     # ultimo_dia = datetime(2025, 9, 8)
-    # primeiro_dia_mes_atual = hoje.replace(day=1)
-    # ultimo_dia_mes_passado = primeiro_dia_mes_atual - timedelta(days=1)
-    # primeiro_dia_mes_passado = ultimo_dia_mes_passado.replace(day=1)
+    dia_inicio = datetime(2014, 1, 1)
+    dia_termino = datetime(2014, 1, 31)
     # url_licitacoes = f'https://transparencia.e-publica.net:443/epublica-portal/rest/florianopolis/api/v1/licitacao?periodo_inicial={primeiro_dia_mes_passado.strftime("%d/%m/%Y")}&periodo_final={ultimo_dia_mes_passado.strftime("%d/%m/%Y")}'
-    url_licitacoes = f'https://transparencia.e-publica.net:443/epublica-portal/rest/florianopolis/api/v1/licitacao?periodo_inicial={ontem.strftime("%d/%m/%Y")}&periodo_final={ontem.strftime("%d/%m/%Y")}'
-    url_contratos = f'https://transparencia.e-publica.net:443/epublica-portal/rest/florianopolis/api/v1/contrato?periodo_inicial={ontem.strftime("%d/%m/%Y")}&periodo_final={ontem.strftime("%d/%m/%Y")}'
+    url_licitacoes = f'https://transparencia.e-publica.net:443/epublica-portal/rest/florianopolis/api/v1/licitacao?periodo_inicial={dia_inicio.strftime("%d/%m/%Y")}&periodo_final={dia_termino.strftime("%d/%m/%Y")}'
+    url_contratos = f'https://transparencia.e-publica.net:443/epublica-portal/rest/florianopolis/api/v1/contrato?periodo_inicial={dia_inicio.strftime("%d/%m/%Y")}&periodo_final={dia_termino.strftime("%d/%m/%Y")}'
     response = requests.get(url_licitacoes) if is_licitacao else requests.get(url_contratos)
     dados = response.json()
     return dados['registros']
@@ -36,12 +36,12 @@ def get_dados_api_empenho():
 
 @task
 def get_dados_internos(is_licitacao=True):
-    # hoje = datetime.today()
-    hoje = datetime(2025, 9, 1)
-    ultimo_dia = datetime(2025, 9, 8)
-    # primeiro_dia_mes_atual = hoje.replace(day=1)
-    # ultimo_dia_mes_passado = primeiro_dia_mes_atual - timedelta(days=1)
-    # primeiro_dia_mes_passado = ultimo_dia_mes_passado.replace(day=1)
+    # dia_inicio = datetime.today() - timedelta(days=1)
+    # dia_inicio = datetime(2025, 9, 1)
+    # dia_termino = dia_inicio
+    # dia_termino = datetime(2025, 9, 8)
+    dia_inicio = datetime(2014, 1, 1)
+    dia_termino = datetime(2014, 1, 31)
     url_get_licitacoes = 'https://transparencia.e-publica.net/epublica-portal/rest/florianopolis/compras/licitacao/listAll?ano=2025&entidade=2002'
     url_licitacao_individual = 'https://transparencia.e-publica.net/epublica-portal/rest/florianopolis/compras/licitacao/form?ano=2025&entidade=2002'
     
@@ -63,11 +63,11 @@ def get_dados_internos(is_licitacao=True):
         # payload_data['searchBean']['searchProperties']['Filtrar porlicitacao.dataEmissao']['valueCompare'] = ultimo_dia_mes_passado.strftime("%Y-%m-%d")
         # payload_data['searchBean']['searchProperties']['Filtrar porlicitacao.dataEmissao']['value'] = primeiro_dia_mes_passado.strftime("%Y-%m-%d")
         if is_licitacao:
-            payload_data['searchBean']['searchProperties']['Filtrar porlicitacao.dataEmissao']['valueCompare'] = ultimo_dia.strftime("%Y-%m-%d")
-            payload_data['searchBean']['searchProperties']['Filtrar porlicitacao.dataEmissao']['value'] = hoje.strftime("%Y-%m-%d")
+            payload_data['searchBean']['searchProperties']['Filtrar porlicitacao.dataEmissao']['valueCompare'] = dia_termino.strftime("%Y-%m-%d")
+            payload_data['searchBean']['searchProperties']['Filtrar porlicitacao.dataEmissao']['value'] = dia_inicio.strftime("%Y-%m-%d")
         else:
-            payload_data['searchBean']['searchProperties']['Filtrar porcontrato.assinatura']['valueCompare'] = ultimo_dia.strftime("%Y-%m-%d")
-            payload_data['searchBean']['searchProperties']['Filtrar porcontrato.assinatura']['value'] = hoje.strftime("%Y-%m-%d")
+            payload_data['searchBean']['searchProperties']['Filtrar porcontrato.assinatura']['valueCompare'] = dia_termino.strftime("%Y-%m-%d")
+            payload_data['searchBean']['searchProperties']['Filtrar porcontrato.assinatura']['value'] = dia_inicio.strftime("%Y-%m-%d")
         payload_data['pagination']['count'] = 1000
 
     if is_licitacao:
@@ -458,7 +458,7 @@ def juntar_dados_contrato(dados_api, dados_internos):
                             UPDATE Empenho
                             SET emissao = %s,
                                 valor_empenhado = %s,
-                                valor_pago = %s,                            
+                                valor_pago = %s                            
                             WHERE id_empenho = %s;
                             """,
                             (emissao_empenho, valor_empenhado, valor_pago, id_empenho)
